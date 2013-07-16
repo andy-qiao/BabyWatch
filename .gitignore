@@ -1,0 +1,5 @@
+gen/
+out/
+*.class
+*.apk
+
