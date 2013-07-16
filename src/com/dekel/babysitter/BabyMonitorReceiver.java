@@ -21,26 +21,6 @@ public class BabyMonitorReceiver extends BroadcastReceiver {
         //Log.d("bla", "XXXX!!");
         this.context = context;
 
-        //LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-
-
-
     }
-
-    private void checkMotion() {
-//        SensorManager sm = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
-//        Sensor s = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        // TODO TYPE_LINEAR_ACCELERATION
-//
-//        sensorManager.registerListener(this,
-//                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-//                SensorManager.SENSOR_DELAY_NORMAL);
-//
-//        sm.registerListener(linAcc,
-//                s,
-//                SensorManager.SENSOR_DELAY_GAME);
-
-    }
-
 
 }
