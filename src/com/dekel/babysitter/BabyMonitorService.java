@@ -67,10 +67,10 @@ public class BabyMonitorService extends Service implements LocationListener {
 
     private float getSpeed(Location location) {
         // TODO average
-//        return location.getSpeed();
+        return location.getSpeed();
         // DEBUG
 
-        return Config.debug ? 20 : 0;
+//        return Config.debug ? 20 : 0;
     }
 
     @Override
