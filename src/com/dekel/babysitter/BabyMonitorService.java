@@ -55,8 +55,6 @@ public class BabyMonitorService extends Service implements LocationListener {
         return null;
     }
 
-
-
     @Override
     public void onLocationChanged(Location location) {
         Log.d(Config.MODULE_NAME, "onLocationChanged called! bla!");
