@@ -13,4 +13,6 @@ public class Config {
     public static float SPEED_THRESHOLD = 8; // ~25Km/h / 3.6m/s
 
     public static boolean debug = true;
+
+    public static String PREFS_NAME = "prefs";
 }
