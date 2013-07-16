@@ -9,4 +9,6 @@ package com.dekel.babysitter;
  */
 public class Config {
     public static String MODULE_NAME = "babysitter_log";
+
+    public static boolean debug = true;
 }

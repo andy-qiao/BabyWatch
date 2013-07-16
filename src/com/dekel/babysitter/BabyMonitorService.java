@@ -20,38 +20,25 @@ import android.util.Log;
 public class BabyMonitorService extends Service implements LocationListener {
 
     LocationManager locationManager = null;
-
-    RideStateMachine ride;
-
-    long serviceLoadTime = System.currentTimeMillis();
-
-    private boolean rideInProgress = false;
-    private boolean rideWithBaby = false;
-
-    private long user_havent_stopped_override = 0;
+    RideStateMachine rsm = new RideStateMachine(this);
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         if (intent.hasExtra("alone")) {
-            rideInProgress = true;
-            rideWithBaby = false;
+            rsm.userRidingAlone();
         }
 
         if (intent.hasExtra("baby")) {
-            rideInProgress = true;
-            rideWithBaby = true;
+            rsm.UserRidingWithBaby();
         }
 
         if (intent.hasExtra("userFinishedRide")) {
-            rideInProgress = false;
-            rideWithBaby = false;
+            rsm.userFinishedRide();
         }
 
         if (intent.hasExtra("userHaventFinishedRide")) {
-            rideInProgress = true;
-            rideWithBaby = true;
-            user_havent_stopped_override = System.currentTimeMillis();
+            rsm.userHasntFinishedRide();
         }
 
         // Register location manager.
@@ -64,44 +51,11 @@ public class BabyMonitorService extends Service implements LocationListener {
         return super.onStartCommand(intent, flags, startId);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
-
     public IBinder onBind(Intent intent) {
         return null;
     }
 
 
-    private void signalRideStopped() {
-        if (!rideInProgress) {
-            return;
-        }
-        rideInProgress = false;
-
-        Log.d(Config.MODULE_NAME , "stopped!!!");
-
-        if (rideWithBaby) {
-            rideWithBaby = false;
-
-            Log.d(Config.MODULE_NAME , "stopped with baby!!!");
-            Intent i = new Intent(this, FinishedRideActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(i);
-        }
-    }
-
-    private void signalRideInProgress() {
-        if (rideInProgress) {
-            return;
-        }
-        rideInProgress = true;
-        Log.d(Config.MODULE_NAME , "a ride in progress.");
-
-        Intent i = new Intent(this, AlertActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(i);
-    }
-
-    private long stoppedSince = 0;
-    private long movingSince = 0;
 
     @Override
     public void onLocationChanged(Location location) {
@@ -110,44 +64,15 @@ public class BabyMonitorService extends Service implements LocationListener {
         float speed = getSpeed(location);
         Log.d(Config.MODULE_NAME , "speed=" + speed);
 
-        if (System.currentTimeMillis() - serviceLoadTime < 5000) {
-            Log.d(Config.MODULE_NAME ,"ignoring, boot");
-            return;
-        }
-
-        if (speed > 0.4) { // TODO m/s
-
-            stoppedSince = 0;
-            if (movingSince == 0) {
-                movingSince = System.currentTimeMillis();
-            } else {
-                if (System.currentTimeMillis() - movingSince > 5000) {
-                    signalRideInProgress();
-                }
-            }
-
-        } else {
-            movingSince = 0;
-            if (stoppedSince == 0) {
-                stoppedSince = System.currentTimeMillis();
-            } else if (user_havent_stopped_override != 0) {
-                if (System.currentTimeMillis() - user_havent_stopped_override > (1 * 60 * 1000)) {
-                    user_havent_stopped_override = 0;
-                }
-
-            } else {
-                if (System.currentTimeMillis() - stoppedSince > 5000) {
-                    signalRideStopped();
-                }
-            }
-
-        }
+        rsm.notifySpeedChange(speed);
     }
 
     private float getSpeed(Location location) {
+        // TODO average
 //        return location.getSpeed();
         // DEBUG
-        return 20;
+
+        return Config.debug ? 20 : 0;
     }
 
     @Override
