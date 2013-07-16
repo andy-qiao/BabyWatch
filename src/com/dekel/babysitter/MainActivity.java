@@ -31,9 +31,7 @@ public class MainActivity extends Activity {
 
         startService(new Intent(this, BabyMonitorService.class));
 
-
-
-        Log.d("bla", "Init done!!");
+        Log.d(Config.MODULE_NAME, "Init done!");
     }
 
     @Override

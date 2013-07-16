@@ -56,7 +56,10 @@ public class BabyMonitorService extends Service implements LocationListener {
 
         // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.getLastKnownLocation("speed");
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        Log.d(Config.MODULE_NAME, "Registered location bla!");
 
         return super.onStartCommand(intent, flags, startId);    //To change body of overridden methods use File | Settings | File Templates.
     }
@@ -72,6 +75,7 @@ public class BabyMonitorService extends Service implements LocationListener {
             return;
         }
         rideInProgress = false;
+
         Log.d(Config.MODULE_NAME , "stopped!!!");
 
         if (rideWithBaby) {
@@ -101,6 +105,8 @@ public class BabyMonitorService extends Service implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
+        Log.d(Config.MODULE_NAME, "onLocationChanged called! bla!");
+
         float speed = getSpeed(location);
         Log.d(Config.MODULE_NAME , "speed=" + speed);
 
