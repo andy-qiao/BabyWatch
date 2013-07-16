@@ -25,6 +25,8 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
 
     LocationManager locationManager = null;
 
+    RideStateMachine ride;
+
     long serviceLoadTime = System.currentTimeMillis();
 
     private boolean rideInProgress = false;
@@ -136,6 +138,7 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
                     signalRideStopped();
                 }
             }
+
         }
     }
 
