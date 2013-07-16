@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:gravity="center_vertical|center_horizontal">
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="אני נוהג עם התינוק ברכב"
+            android:id="@+id/babyTextView" android:background="#ff9357" android:textSize="40dp"
+            android:gravity="center_vertical|center_horizontal"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="התינוק לא נמצא איתי ברכב"
+            android:id="@+id/aloneTextView" android:height="150dp" android:gravity="center_vertical|center_horizontal"
+            android:textSize="40dp" android:background="#cf3eff"/>
+</LinearLayout>
