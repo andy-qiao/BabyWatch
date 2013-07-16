@@ -23,7 +23,6 @@ import android.util.Log;
  */
 public class BabyMonitorService extends Service implements SensorEventListener, LocationListener {
 
-    SensorManager sensorManager = null;
     LocationManager locationManager = null;
 
     long serviceLoadTime = System.currentTimeMillis();
@@ -57,59 +56,16 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
             user_havent_stopped_override = System.currentTimeMillis();
         }
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
+        // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-//        sensorManager.registerListener(this,
-//                sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-//                SensorManager.SENSOR_ACCELEROMETER);
-//                SensorManager.SENSOR_DELAY_FASTEST);
-
-        Location location = locationManager.getLastKnownLocation("speed");
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
-
 
         return super.onStartCommand(intent, flags, startId);    //To change body of overridden methods use File | Settings | File Templates.
     }
 
 
-
-
     public IBinder onBind(Intent intent) {
         return null;
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-            //getAccelerometer(event);
-        }
-
-    }
-
-    private void getAccelerometer(SensorEvent event) {
-        float[] values = event.values;
-        // Movement
-        float x = values[0];
-        float y = values[1];
-        float z = values[2];
-
-        float accelationSquareRoot = (x * x + y * y + z * z)
-                / (SensorManager.GRAVITY_EARTH * SensorManager.GRAVITY_EARTH);
-
-        if (accelationSquareRoot > 5) {
-            // signalRideInProgress();
-
-        }
-
-
-        Log.d("bla", "acceleration=" + accelationSquareRoot);
     }
 
 
