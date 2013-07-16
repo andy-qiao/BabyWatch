@@ -3,10 +3,6 @@ package com.dekel.babysitter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
-import android.location.LocationManager;
-import android.util.Log;
 
 /**
  * Created with IntelliJ IDEA.

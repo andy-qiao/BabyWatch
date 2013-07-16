@@ -1,17 +1,13 @@
 package com.dekel.babysitter;
 
-import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.location.*;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.text.format.Time;
 import android.util.Log;
 
 /**
@@ -21,7 +17,7 @@ import android.util.Log;
  * Time: 11:24 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BabyMonitorService extends Service implements SensorEventListener, LocationListener {
+public class BabyMonitorService extends Service implements LocationListener {
 
     LocationManager locationManager = null;
 
@@ -76,12 +72,12 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
             return;
         }
         rideInProgress = false;
-        Log.d("bla", "stopped!!!");
+        Log.d(Config.MODULE_NAME , "stopped!!!");
 
         if (rideWithBaby) {
             rideWithBaby = false;
 
-            Log.d("bla", "stopped with baby!!!");
+            Log.d(Config.MODULE_NAME , "stopped with baby!!!");
             Intent i = new Intent(this, FinishedRideActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(i);
@@ -93,7 +89,7 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
             return;
         }
         rideInProgress = true;
-        Log.d("bla", "a ride in progress.");
+        Log.d(Config.MODULE_NAME , "a ride in progress.");
 
         Intent i = new Intent(this, AlertActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -105,11 +101,11 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
 
     @Override
     public void onLocationChanged(Location location) {
-        float speed = location.getSpeed();
-        Log.d("bla", "speed=" + speed);
+        float speed = getSpeed(location);
+        Log.d(Config.MODULE_NAME , "speed=" + speed);
 
         if (System.currentTimeMillis() - serviceLoadTime < 5000) {
-            Log.d("bla","ignoring, boot");
+            Log.d(Config.MODULE_NAME ,"ignoring, boot");
             return;
         }
 
@@ -140,6 +136,12 @@ public class BabyMonitorService extends Service implements SensorEventListener, 
             }
 
         }
+    }
+
+    private float getSpeed(Location location) {
+//        return location.getSpeed();
+        // DEBUG
+        return 20;
     }
 
     @Override
