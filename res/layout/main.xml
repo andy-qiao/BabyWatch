@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="#ffffff">
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="נוסעים לגן"
+            android:textSize="30dp" android:id="@+id/mainTitleTextView"
+            android:textColor="#ffffff"
+            android:background="@drawable/title_shape_gradient"
+
+            android:gravity="center_vertical|center_horizontal"/>
+
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="260dp">
+        <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
+                <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.4"
+            android:id="@+id/mainImageReady" 
+            android:adjustViewBounds="true"
+            android:src="@drawable/ready" android:layout_gravity="center_horizontal"/>
+        
+        <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="0.3"/>
+    </LinearLayout>
+
+
+    
+
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:text="המערכת דרוכה" android:textSize="36dp" android:id="@+id/mainSubtitleTextView"
+              android:textColor="#000000"
+              android:gravity="center|center_vertical|center_horizontal" android:layout_marginTop="20dp"/>
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:id="@+id/barView1" android:background="#c8c8c8" android:adjustViewBounds="true"
+            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textScaleX="1.0"
+              android:text="בשעת נסיעה המערכת תזהה עצירות ממושכות ותזכיר לכם לוודא שלא שכחתם אף אחד באוטו" 
+              android:textSize="26dp" android:id="@+id/mainBodyTextView1"
+              android:textColor="#000000" android:layout_marginTop="20dp"
+              android:layout_marginBottom="50dp" android:gravity="center_horizontal" android:textStyle="bold"
+              android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+</LinearLayout>
+

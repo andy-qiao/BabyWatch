@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
     private boolean isFirstTime = true; // TODO repo
+    private boolean isRideInProgress = false; // TOOD state machine.
+
     private enum State {
         SHOWING_TOS,
         TOS_APPROVED_SHOWING_INTRO,
@@ -56,21 +59,16 @@ public class MainActivity extends Activity {
                             break;
 
                         case TOS_APPROVED_SHOWING_INTRO:
-                            subtitleView.setText("ניצחון!!!!!");
+                            showSystemReady();
                             break;
                         default:
                             break;
                     }
-
-
-
-
-
                 }
             });
 
-
-
+        } else { // Not first time!
+            showSystemReady();
         }
 
 
@@ -93,6 +91,31 @@ public class MainActivity extends Activity {
 
 
 
+    }
+
+    private boolean demoError = true;
+    private void showSystemReady() {
+        setContentView(R.layout.main);
+
+        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
+        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(typeFace);
+
+        final TextView bodyView = (TextView) findViewById(R.id.mainBodyTextView1);
+        bodyView.setTypeface(typeFace);
+        final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
+        subtitleView.setTypeface(typeFaceBold);
+
+        if (isRideInProgress) {
+            subtitleView.setText("יצאנו לדרך");
+            bodyView.setText("עם סיום הנסיעה תתריע המערכת ותבקש שתוודאו כי לא שכחתם אף אחד :)");
+        }
+
+        if (demoError) {
+            subtitleView.setText("אופס!");
+            bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
+            ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.failure);
+        }
     }
 
 }
