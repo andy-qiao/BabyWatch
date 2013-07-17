@@ -52,8 +52,8 @@ public class MainActivity extends Activity {
                         case SHOWING_TOS:
                             state = State.TOS_APPROVED_SHOWING_INTRO;
                             // Live switching
-                            subtitleView.setText("על נוסעים לגן");
-                            bodyView.setText("אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב ותזכיר לכם לוודא שלא שכחתם את ילדכם ברכב זמן קצר לאחר יציאתכם מהרכב.\n");
+                            subtitleView.setText("על \"נוסעים לגן\"");
+                            bodyView.setText("אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב. זמן קצר לאחר סיום הנסיעה המערכת תזכיר לכם לוודא שלא שכחתם את ילדכם\n");
                             continueButton.setText("המשך");
 
                             break;
