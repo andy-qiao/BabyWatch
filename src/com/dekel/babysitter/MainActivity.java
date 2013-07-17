@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     private boolean isFirstTime = true; // TODO repo
-    private boolean isRideInProgress = true; // TOOD state machine.
+    private boolean isRideInProgress = false; // TOOD state machine.
     private boolean demoError = false;
 
 
