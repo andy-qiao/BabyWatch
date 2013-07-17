@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -23,12 +25,20 @@ public class AlertActivity extends Activity {
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
 
-        ((TextView) findViewById(R.id.questionView)).setTypeface(typeFace);
+        TextView titleView =  (TextView) findViewById(R.id.titleView);
+        titleView.setTypeface(typeFaceBold);
+
         TextView noView = (TextView) findViewById(R.id.NoView);
         noView.setTypeface(typeFaceBold);
 
         TextView yesView = (TextView) findViewById(R.id.yesView);
         yesView.setTypeface(typeFaceBold);
+
+        if (true) { // TODO
+            titleView.setText("זוהתה דיבורית חדשה!");
+            findViewById(R.id.barView3).setVisibility(View.VISIBLE);
+            findViewById(R.id.subtitleView).setVisibility(View.VISIBLE);
+        }
 
         noView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

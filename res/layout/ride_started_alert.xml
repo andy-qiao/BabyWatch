@@ -14,8 +14,16 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="יש ילד באוטו?"
-            android:id="@+id/questionView" android:textColor="#ffffff" android:layout_gravity="center_horizontal"
+            android:id="@+id/titleView" android:textColor="#ffffff" android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal" android:textSize="42dp" android:layout_weight="0.05"/>
+    <ImageView android:layout_width="fill_parent" android:layout_height="1dp" android:id="@+id/barView3"
+               android:background="#c8c8c8" android:adjustViewBounds="true" android:layout_marginLeft="20dp"
+               android:layout_marginRight="20dp" android:visibility="gone" android:layout_marginTop="8dp"
+               android:layout_marginBottom="15dp"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="האם המכשיר בלה בלה בלה הוא הדיבורית בה אתה משתמש ברכב?"
+              android:id="@+id/subtitleView" android:textColor="#ffffff" android:layout_gravity="center_horizontal"
+              android:gravity="center_horizontal" android:textSize="24dp" android:layout_weight="0.05"
+              android:visibility="gone"/>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
