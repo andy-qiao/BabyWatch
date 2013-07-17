@@ -2,9 +2,11 @@ package com.dekel.babysitter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
@@ -39,6 +41,10 @@ public class MainActivity extends Activity {
                 Config.debug = !Config.debug;
             }
         });
+
+        TextView myTextView = (TextView) findViewById(R.id.welcomeTextView);
+        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
+        myTextView.setTypeface(typeFace);
     }
 
 }
