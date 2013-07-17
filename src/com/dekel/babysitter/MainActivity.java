@@ -36,15 +36,20 @@ public class MainActivity extends Activity {
 
         Log.d(Config.MODULE_NAME, "Init done!");
 
+
+
         findViewById(R.id.buttonDebug).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Config.debug = !Config.debug;
+
             }
         });
 
-        TextView myTextView = (TextView) findViewById(R.id.welcomeTextView);
-        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
-        myTextView.setTypeface(typeFace);
+        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
+        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(typeFace);
+        ((TextView) findViewById(R.id.mainSubtitleTextView)).setTypeface(typeFaceBold);
+        ((TextView) findViewById(R.id.mainBodyTextView1)).setTypeface(typeFace);
     }
 
 }

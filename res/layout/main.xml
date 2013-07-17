@@ -3,16 +3,39 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-        >
+              android:background="#ffffff">
     <TextView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="ברוכים הבאים, המערכת מנטרת"
-            android:textSize="30dp" android:id="@+id/welcomeTextView"/>
+            android:layout_height="45dp"
+            android:text="נוסעים לגן"
+            android:textSize="30dp" android:id="@+id/mainTitleTextView" android:background="#1cc159"
+            android:textColor="#ffffff" android:gravity="center_vertical|center_horizontal"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:text="תנאי שימוש" android:textSize="36dp" android:id="@+id/mainSubtitleTextView"
+              android:textColor="#000000"
+              android:gravity="center|center_vertical|center_horizontal" android:layout_marginTop="20dp"/>
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:id="@+id/barView1" android:background="#c8c8c8" android:adjustViewBounds="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+    <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textScaleX="1.0"
+              android:text='השימוש באפליקציה "נוסעים לגן" הינו באחריותך הבלעדית. מפה ידה ידה ידה ידה' android:textSize="26dp" android:id="@+id/mainBodyTextView1"
+              android:textColor="#000000" android:layout_marginTop="20dp"
+              android:layout_marginBottom="60dp" android:gravity="center_horizontal" android:textStyle="bold"
+              android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
+    <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:id="@+id/barView2" android:background="#c8c8c8" android:adjustViewBounds="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
     <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DEBUG"
-            android:id="@+id/buttonDebug" android:layout_gravity="center"/>
+            android:id="@+id/buttonDebug" android:layout_gravity="center" android:gravity="center|bottom"/>
 </LinearLayout>
 
