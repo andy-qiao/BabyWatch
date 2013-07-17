@@ -13,14 +13,16 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 
     private boolean isFirstTime = true; // TODO repo
-    private boolean isRideInProgress = false; // TOOD state machine.
+    private boolean isRideInProgress = true; // TOOD state machine.
+    private boolean demoError = false;
+
 
     private enum State {
         SHOWING_TOS,
         TOS_APPROVED_SHOWING_INTRO,
     }
 
-    private State state;
+    private State state = State.SHOWING_TOS;
 
 
     /**
@@ -93,7 +95,6 @@ public class MainActivity extends Activity {
 
     }
 
-    private boolean demoError = true;
     private void showSystemReady() {
         setContentView(R.layout.main);
 
@@ -108,7 +109,7 @@ public class MainActivity extends Activity {
 
         if (isRideInProgress) {
             subtitleView.setText("יצאנו לדרך");
-            bodyView.setText("עם סיום הנסיעה תתריע המערכת ותבקש שתוודאו כי לא שכחתם אף אחד :)");
+            bodyView.setText("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)");
         }
 
         if (demoError) {
