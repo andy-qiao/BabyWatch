@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
@@ -36,20 +37,13 @@ public class MainActivity extends Activity {
 
         Log.d(Config.MODULE_NAME, "Init done!");
 
-
-
-        findViewById(R.id.buttonDebug).setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                Config.debug = !Config.debug;
-
-            }
-        });
-
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
         ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(typeFace);
         ((TextView) findViewById(R.id.mainSubtitleTextView)).setTypeface(typeFaceBold);
         ((TextView) findViewById(R.id.mainBodyTextView1)).setTypeface(typeFace);
+        ((Button) findViewById(R.id.button)).setTypeface(typeFace);
+
     }
 
 }
