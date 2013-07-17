@@ -32,6 +32,8 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        startActivity(new Intent(this, AlertActivity.class)); // TODO debug
+
         if (isFirstTime) {
             setContentView(R.layout.terms_of_service);
 

@@ -2,9 +2,11 @@ package com.dekel.babysitter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,10 +18,19 @@ import android.view.View;
 public class AlertActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location_proposal);
+        setContentView(R.layout.ride_started_alert);
 
+        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
+        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
 
-        findViewById(R.id.aloneTextView).setOnClickListener(new View.OnClickListener() {
+        ((TextView) findViewById(R.id.questionView)).setTypeface(typeFace);
+        TextView noView = (TextView) findViewById(R.id.NoView);
+        noView.setTypeface(typeFaceBold);
+
+        TextView yesView = (TextView) findViewById(R.id.yesView);
+        yesView.setTypeface(typeFaceBold);
+
+        noView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 alone();
                 onBackPressed();
@@ -27,7 +38,7 @@ public class AlertActivity extends Activity {
         });
 
 
-        findViewById(R.id.babyTextView).setOnClickListener(new View.OnClickListener() {
+        yesView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 withBaby();
                 onBackPressed();
