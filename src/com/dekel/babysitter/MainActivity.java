@@ -2,6 +2,7 @@ package com.dekel.babysitter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-    private boolean isFirstTime = false; // TODO repo
+    public static final String MODULE_MAIN_PREFERENCE = "bla";
+    public static final String FIRST_RUN_COMPLETED_KEY = "first_run";
+
     private boolean isRideInProgress = false; // TOOD state machine.
     private boolean demoError = true;
     private boolean demoAlert = false;
@@ -26,6 +29,8 @@ public class MainActivity extends Activity {
     private State state = State.SHOWING_TOS;
 
 
+
+
     /**
      * Called when the activity is first created.
      */
@@ -37,7 +42,7 @@ public class MainActivity extends Activity {
             startActivity(new Intent(this, AlertActivity.class));
         }
 
-        if (isFirstTime) {
+        if (!isFirstTimeCompleted()) { // First time!
             setContentView(R.layout.terms_of_service);
 
             state = State.SHOWING_TOS;
@@ -55,22 +60,20 @@ public class MainActivity extends Activity {
             continueButton.setTypeface(typeFace);
             continueButton.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
-                    switch (state) {
-                        case SHOWING_TOS:
-                            state = State.TOS_APPROVED_SHOWING_INTRO;
-                            // Live switching
-                            subtitleView.setText("על \"נוסעים לגן\"");
-                            bodyView.setText("אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב. זמן קצר לאחר סיום הנסיעה המערכת תזכיר לכם לוודא שלא שכחתם את ילדכם\n");
-                            continueButton.setText("המשך");
+                switch (state) {
+                    case SHOWING_TOS:
+                        state = State.TOS_APPROVED_SHOWING_INTRO;
+                        // Live switching
+                        subtitleView.setText("על \"נוסעים לגן\"");
+                        bodyView.setText("אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב. זמן קצר לאחר סיום הנסיעה המערכת תזכיר לכם לוודא שלא שכחתם את ילדכם\n");
+                        continueButton.setText("המשך");
+                        break;
 
-                            break;
-
-                        case TOS_APPROVED_SHOWING_INTRO:
-                            showSystemReady();
-                            break;
-                        default:
-                            break;
-                    }
+                    case TOS_APPROVED_SHOWING_INTRO:
+                        setFirstTimeCompleted();
+                        showSystemReady();
+                        break;
+                }
                 }
             });
 
@@ -98,6 +101,16 @@ public class MainActivity extends Activity {
 
 
 
+    }
+
+    private boolean isFirstTimeCompleted() {
+        return getSharedPreferences(MODULE_MAIN_PREFERENCE, MODE_PRIVATE).getBoolean(FIRST_RUN_COMPLETED_KEY, false);
+    }
+
+    private void setFirstTimeCompleted() {
+        SharedPreferences.Editor e = getSharedPreferences(MODULE_MAIN_PREFERENCE, MODE_PRIVATE).edit();
+        e.putBoolean(FIRST_RUN_COMPLETED_KEY, true);
+        e.commit();
     }
 
     private void showSystemReady() {
