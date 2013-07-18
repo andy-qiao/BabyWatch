@@ -15,49 +15,44 @@ import android.util.Log;
  * User: dekelna
  * Date: 7/15/13
  * Time: 11:24 PM
- * To change this template use File | Settings | File Templates.
  */
 public class BabyMonitorService extends Service implements LocationListener {
 
     LocationManager locationManager = null;
-    RideStateMachine rsm = new RideStateMachine(this);
+    RideStateMachine rsm = new RideStateMachine(this); // TODO here?
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (intent.hasExtra("alone")) {
+        if (intent.hasExtra(Config.ALONE_INTENT_EXTRA)) {
             rsm.userRidingAlone();
         }
 
-        if (intent.hasExtra("baby")) {
+        if (intent.hasExtra(Config.BABY_INTENT_EXTRA)) {
             rsm.UserRidingWithBaby();
         }
 
-        if (intent.hasExtra("userFinishedRide")) {
+        if (intent.hasExtra(Config.USER_FINISHED_RIDE_INTENT)) {
             rsm.userFinishedRide();
         }
 
-        if (intent.hasExtra("userHaventFinishedRide")) {
+        if (intent.hasExtra(Config.USER_HAVENT_FINISHED_RIDE_INTENT)) {
             rsm.userHasntFinishedRide();
         }
 
         // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.getLastKnownLocation("speed");
+        locationManager.getLastKnownLocation("speed"); // TODO is it necessary?
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
 
-        Log.d(Config.MODULE_NAME, "Registered location bla!");
+        Log.d(Config.MODULE_NAME, "Registered location service!");
 
-        return super.onStartCommand(intent, flags, startId);    //To change body of overridden methods use File | Settings | File Templates.
-    }
-
-    public IBinder onBind(Intent intent) {
-        return null;
+        return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.d(Config.MODULE_NAME, "onLocationChanged called! bla!");
+        Log.d(Config.MODULE_NAME, "onLocationChanged called!");
 
         float speed = getSpeed(location);
         Log.d(Config.MODULE_NAME , "speed=" + speed);
@@ -66,11 +61,15 @@ public class BabyMonitorService extends Service implements LocationListener {
     }
 
     private float getSpeed(Location location) {
-        // TODO average
-        return location.getSpeed();
-        // DEBUG
+//        return Config.debug ? 20 : 0; // TODO DEBUG
 
-//        return Config.debug ? 20 : 0;
+        // TODO average
+
+        return location.getSpeed();
+    }
+
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     @Override

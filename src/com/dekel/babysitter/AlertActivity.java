@@ -6,8 +6,6 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -18,10 +16,11 @@ import android.widget.TextView;
  * To change this template use File | Settings | File Templates.
  */
 public class AlertActivity extends Activity {
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ride_started_alert);
 
+        setContentView(R.layout.ride_started_alert);
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
 
@@ -37,7 +36,13 @@ public class AlertActivity extends Activity {
         if (true) { // TODO
             titleView.setText("זוהתה דיבורית חדשה!");
             findViewById(R.id.barView3).setVisibility(View.VISIBLE);
-            findViewById(R.id.subtitleView).setVisibility(View.VISIBLE);
+            TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
+            subtitleView.setVisibility(View.VISIBLE);
+//            String s = subtitleView.getText().toString();
+//            subtitleView.setText(s.replace(getIntent().getStringExtra("device_name"), "MARKER"));
+            // TODO
+
+
         }
 
         noView.setOnClickListener(new View.OnClickListener() {
@@ -57,17 +62,17 @@ public class AlertActivity extends Activity {
     }
 
     public void alone() {
-        Log.d("bla","alone");
+        Log.d(Config.MODULE_NAME,"alone!");
         Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra("alone", true);
+        i.putExtra(Config.ALONE_INTENT_EXTRA, true);
         startService(i);
 
     }
 
     public void withBaby() {
-        Log.d("bla","baby!!!");
+        Log.d(Config.MODULE_NAME,"baby!!!");
         Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra("baby", true);
+        i.putExtra(Config.BABY_INTENT_EXTRA, true);
         startService(i);
     }
 }
