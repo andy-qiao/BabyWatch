@@ -12,9 +12,10 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-    private boolean isFirstTime = true; // TODO repo
+    private boolean isFirstTime = false; // TODO repo
     private boolean isRideInProgress = false; // TOOD state machine.
-    private boolean demoError = false;
+    private boolean demoError = true;
+    private boolean demoAlert = false;
 
 
     private enum State {
@@ -32,7 +33,9 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        startActivity(new Intent(this, AlertActivity.class)); // TODO debug
+        if (demoAlert) {
+            startActivity(new Intent(this, AlertActivity.class));
+        }
 
         if (isFirstTime) {
             setContentView(R.layout.terms_of_service);
@@ -117,7 +120,7 @@ public class MainActivity extends Activity {
         if (demoError) {
             subtitleView.setText("אופס!");
             bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
-            ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.failure);
+            ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
     }
 

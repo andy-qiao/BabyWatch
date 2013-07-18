@@ -28,7 +28,7 @@
             android:layout_weight="0.4"
             android:id="@+id/mainImageReady" 
             android:adjustViewBounds="true"
-            android:src="@drawable/ready" android:layout_gravity="center_horizontal"/>
+            android:src="@drawable/icon_v" android:layout_gravity="center_horizontal"/>
         
         <FrameLayout
                 android:layout_width="0dp"
