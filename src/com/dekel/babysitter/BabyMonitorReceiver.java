@@ -14,7 +14,6 @@ import java.util.*;
  * User: dekelna
  * Date: 7/15/13
  * Time: 8:37 PM
- * To change this template use File | Settings | File Templates.
  */
 public class BabyMonitorReceiver extends BroadcastReceiver {
     private Context context;
@@ -48,15 +47,6 @@ public class BabyMonitorReceiver extends BroadcastReceiver {
 
 
 
-//        SharedPreferences settings = context.getSharedPreferences(Config.PREFS_NAME, 0);
-//
-////        HashSet.
-//        String s = settings.getString();
-//        try {
-//            new ByteArrayInputStream(s.getBytes("UTF-8"));
-//        } catch (UnsupportedEncodingException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
 
 
         //detectBluetoothdevices();

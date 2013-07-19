@@ -15,7 +15,6 @@ import android.widget.Toast;
  * User: dekelna
  * Date: 7/15/13
  * Time: 11:39 PM
- * To change this template use File | Settings | File Templates.
  */
 public class AlertActivity extends Activity {
 
