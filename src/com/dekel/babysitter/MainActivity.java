@@ -74,17 +74,15 @@ public class MainActivity extends Activity {
 
         sliderState = SliderState.SHOWING_TOS;
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
-        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(typeFace);
+        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(FontUtils.getTypeface(this));
 
         final TextView bodyView = (TextView) findViewById(R.id.mainBodyTextView1);
-        bodyView.setTypeface(typeFace);
+        bodyView.setTypeface(FontUtils.getTypeface(this));
         final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
-        subtitleView.setTypeface(typeFaceBold);
+        subtitleView.setTypeface(FontUtils.getTypefaceBold(this));
 
         final Button continueButton = (Button) findViewById(R.id.button);
-        continueButton.setTypeface(typeFace);
+        continueButton.setTypeface(FontUtils.getTypeface(this));
         continueButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
             switch (sliderState) {
@@ -105,17 +103,16 @@ public class MainActivity extends Activity {
         });
     }
 
+
     private void showStatefulHome() {
         setContentView(R.layout.main);
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
-        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(typeFace);
+        ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(FontUtils.getTypeface(this));
 
         final TextView bodyView = (TextView) findViewById(R.id.mainBodyTextView1);
-        bodyView.setTypeface(typeFace);
+        bodyView.setTypeface(FontUtils.getTypeface(this));
         final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
-        subtitleView.setTypeface(typeFaceBold);
+        subtitleView.setTypeface(FontUtils.getTypefaceBold(this));
 
         if (babyRepo.isRideInProgress()) { // TODO baby as well
             subtitleView.setText("יצאנו לדרך");
@@ -128,5 +125,4 @@ public class MainActivity extends Activity {
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
     }
-
 }

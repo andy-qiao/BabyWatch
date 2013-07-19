@@ -25,17 +25,15 @@ public class AlertActivity extends Activity {
         setContentView(R.layout.ride_started_alert);
         mp = MediaPlayer.create(this, R.raw.sounds_774_springy);
 
-        Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
-        Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
 
         TextView titleView =  (TextView) findViewById(R.id.titleView);
-        titleView.setTypeface(typeFaceBold);
+        titleView.setTypeface(FontUtils.getTypefaceBold(this));
 
         TextView noView = (TextView) findViewById(R.id.NoView);
-        noView.setTypeface(typeFaceBold);
+        noView.setTypeface(FontUtils.getTypefaceBold(this));
 
         TextView yesView = (TextView) findViewById(R.id.yesView);
-        yesView.setTypeface(typeFaceBold);
+        yesView.setTypeface(FontUtils.getTypefaceBold(this));
 
         if (getIntent().getBooleanExtra(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA, false)) {
             noView.setOnClickListener(new View.OnClickListener() {
