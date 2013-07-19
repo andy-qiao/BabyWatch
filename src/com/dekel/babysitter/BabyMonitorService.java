@@ -63,7 +63,7 @@ public class BabyMonitorService extends Service implements LocationListener {
             rsm.userChoiceHasntFinishedRide();
         }
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     @Override

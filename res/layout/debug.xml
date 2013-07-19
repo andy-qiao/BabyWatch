@@ -12,4 +12,8 @@
             android:id="@+id/gofastbutton" android:layout_gravity="center"/>
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="stop"
             android:id="@+id/stopbutton" android:layout_gravity="center"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="natural"
+            android:id="@+id/natural" android:layout_gravity="center"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="clearPending"
+            android:id="@+id/clearPending" android:layout_gravity="center"/>
 </LinearLayout>

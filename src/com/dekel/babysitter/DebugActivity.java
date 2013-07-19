@@ -27,6 +27,18 @@ public class DebugActivity extends Activity {
                 startServiceWithSpeedIntent(10.0f);
             }
         });
+
+        findViewById(R.id.natural).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                startServiceWithSpeedIntent(-1.0f);
+            }
+        });
+
+        findViewById(R.id.clearPending).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                new BabyRepo(DebugActivity.this).setDialogPendingUser(false);
+            }
+        });
     }
 
     private void startServiceWithSpeedIntent(float speed) {
