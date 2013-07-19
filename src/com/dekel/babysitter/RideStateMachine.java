@@ -65,7 +65,9 @@ public class RideStateMachine {
                 movingSince = System.currentTimeMillis();
             } else {
                 if (System.currentTimeMillis() - movingSince > MOVING_MIN_TIME) {
-                    handleRideStarted();
+                    if (!babyRepo.isRideInProgress()) {
+                        handleRideStarted();
+                    }
                 }
             }
 
@@ -80,7 +82,9 @@ public class RideStateMachine {
 
             } else {
                 if (System.currentTimeMillis() - stoppedSince > STOPPING_MIN_TIME) {
-                    handleRideStopped();
+                    if (babyRepo.isRideInProgress()) {
+                        handleRideStopped();
+                    }
                 }
             }
         }
@@ -88,19 +92,13 @@ public class RideStateMachine {
 
     public void handleRideStarted() {
         Log.d(Config.MODULE_NAME, "handleRideStarted");
+        assert !babyRepo.isRideInProgress();
+        babyRepo.setRideInProgress(true);
 
         if (babyRepo.isDialogPendingUser()) {
             return;
             // TODO what's the expected behaviour?
         }
-
-        if (babyRepo.isRideInProgress()) {
-//            return; // TODO ignore?
-//            throw new IllegalStateException();
-            // TODO just for testing?
-        }
-
-        babyRepo.setRideInProgress(true);
 
         Log.d(Config.MODULE_NAME, Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
         startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
@@ -108,10 +106,7 @@ public class RideStateMachine {
 
     private void handleRideStopped() {
         Log.d(Config.MODULE_NAME, "handleRideStopped");
-
-        if (!babyRepo.isRideInProgress()) {
-            throw new IllegalStateException();
-        }
+        assert babyRepo.isRideInProgress();
         babyRepo.setRideInProgress(false);
 
         if (babyRepo.isBabyInCar()) {
