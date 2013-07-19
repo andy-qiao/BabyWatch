@@ -97,34 +97,15 @@ public class AlertActivity extends Activity {
         finish();
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     private void showBluetoothAlert(TextView titleView) {
         titleView.setText("זוהתה דיבורית חדשה!");
         findViewById(R.id.barView3).setVisibility(View.VISIBLE);
         TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
 
         subtitleView.setText(
-                "המערכת זיהתה כי הרגע בוצע חיבור לדיבורית מדגם " +
-                        getIntent().getStringExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA) +
-                        ". האם זהו התקן דיבורית קבוע ברכבך?"
+            new String("המערכת זיהתה כי הרגע בוצע חיבור לדיבורית מדגם ") +
+            getIntent().getStringExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA) +
+            new String(". האם זהו התקן דיבורית קבוע ברכבך?")
         );
 
         subtitleView.setVisibility(View.VISIBLE);
