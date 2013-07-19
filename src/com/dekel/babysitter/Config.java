@@ -23,4 +23,7 @@ public class Config {
     public static final String SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA = "showRideFinishedAlert";
     public static final String SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA = "newBluetoothDeviceAlert";
     public static final String BLUETOOTH_DEVICE_NAME_INTENT_EXTRA = "deviceName";
+
+    public static final String DEBUG_SPEED_INTENT_EXTRA = "speeeed";
+
 }

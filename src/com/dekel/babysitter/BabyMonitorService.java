@@ -39,6 +39,10 @@ public class BabyMonitorService extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
+        if (intent.hasExtra(Config.DEBUG_SPEED_INTENT_EXTRA)) {
+            override_speed = intent.getFloatExtra(Config.DEBUG_SPEED_INTENT_EXTRA, -1);
+        }
+
         if (intent.hasExtra(Config.USER_CHOICE_ALONE_INTENT_EXTRA)) {
             rsm.userChoiceRidingAlone();
         }
@@ -49,6 +53,10 @@ public class BabyMonitorService extends Service implements LocationListener {
 
         if (intent.hasExtra(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA)) {
             rsm.userChoiseFinishedRide();
+        }
+
+        if (intent.hasExtra(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA)) {
+            rsm.userChoiceHasntFinishedRide();
         }
 
         if (intent.hasExtra(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA)) {
@@ -71,10 +79,11 @@ public class BabyMonitorService extends Service implements LocationListener {
         rsm.notifySpeedChange(speed);
     }
 
+    private float override_speed = -1;
     private float getSpeed(Location location) {
-//        return Config.debug ? 20 : 0; // TODO DEBUG
-
-        // TODO average
+        if (override_speed != -1) {
+            return override_speed;
+        }
 
         return location.getSpeed();
     }
