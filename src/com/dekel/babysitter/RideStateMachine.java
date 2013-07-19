@@ -21,11 +21,6 @@ public class RideStateMachine {
 
     private long stoppedSince = 0;
     private long movingSince = 0;
-
-//    private boolean rideInProgress = false;
-    private boolean rideWithBaby = false;
-    private boolean userDialogInProgress = false;
-
     private long user_havent_stopped_override = 0;
 
     private Context context = null;
@@ -71,7 +66,9 @@ public class RideStateMachine {
     }
 
     public void handleRideStarted() {
-        if (userDialogInProgress) {
+        Log.d(Config.MODULE_NAME, "handleRideStarted");
+
+        if (babyRepo.isDialogPendingUser()) {
             return;
             // TODO what's the expected behaviour?
         }
@@ -83,66 +80,60 @@ public class RideStateMachine {
         }
 
         babyRepo.setRideInProgress(true);
-        userDialogInProgress = true;
-//        rideInProgress = true;
-        Log.d(Config.MODULE_NAME, "a ride in progress.");
 
+        Log.d(Config.MODULE_NAME, Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
         startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
     }
 
     private void handleRideStopped() {
-        if (userDialogInProgress) {
-            return;
-            // TODO what's the expected behaviour?
-        }
+        Log.d(Config.MODULE_NAME, "handleRideStopped");
 
         if (!babyRepo.isRideInProgress()) {
             throw new IllegalStateException();
         }
         babyRepo.setRideInProgress(false);
 
-        Log.d(Config.MODULE_NAME, "stopped!!!");
+        if (babyRepo.isBabyInCar()) {
+            babyRepo.setBabyInCar(false);
 
-        if (rideWithBaby) {
-            rideWithBaby = false;
+            if (babyRepo.isDialogPendingUser()) {
+                // TODO what's the expected behaviour?
+                // TODO maybe alert without sound? medium alert? diffrent text?
+                return;
+            }
 
-            userDialogInProgress = true;
-
-            Log.d(Config.MODULE_NAME , "stopped with baby!!!");
+            Log.d(Config.MODULE_NAME , Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA);
             startAlertActivityWithIntent(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA);
         }
     }
 
     public void userChoiceHasntFinishedRide() {
-        userDialogInProgress = false;
-//        rideInProgress = true;
+        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
-        rideWithBaby = true;
+        babyRepo.setBabyInCar(true);
         user_havent_stopped_override = System.currentTimeMillis();
     }
 
     public void userChoiseFinishedRide() {
-        userDialogInProgress = false;
-//        rideInProgress = false;
+        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(false);
-        rideWithBaby = false;
+        babyRepo.setBabyInCar(false);
     }
 
     public void UserChoiceRidingWithBaby() {
-        userDialogInProgress = false;
-//        rideInProgress = true;
+        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
-        rideWithBaby = true;
+        babyRepo.setBabyInCar(true);
     }
 
     public void userChoiceRidingAlone() {
-        userDialogInProgress = false;
-//        rideInProgress = true;
+        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
-        rideWithBaby = false;
+        babyRepo.setBabyInCar(false);
     }
 
     private void startAlertActivityWithIntent(String s) {
+        babyRepo.setDialogPendingUser(true);
         Intent i = new Intent(context, AlertActivity.class);
         i.putExtra(s, true);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP); // TODO
