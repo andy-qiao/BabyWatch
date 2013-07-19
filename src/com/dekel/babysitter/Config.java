@@ -23,8 +23,4 @@ public class Config {
     public static final String SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA = "showRideFinishedAlert";
     public static final String SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA = "newBluetoothDeviceAlert";
     public static final String BLUETOOTH_DEVICE_NAME_INTENT_EXTRA = "deviceName";
-
-
-
-    public static float SPEED_THRESHOLD = 8; // ~25Km/h / 3.6m/s
 }

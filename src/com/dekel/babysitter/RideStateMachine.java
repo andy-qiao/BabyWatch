@@ -18,6 +18,8 @@ public class RideStateMachine {
     public static final int MOVING_MIN_TIME = 15 * 1000;
     public static final int STOPPING_MIN_TIME = 5 * 60 * 1000;
     public static final int FALSE_POSITIVE_STOP = 5 * 60 * 1000;
+    public static float SPEED_MOVING_THRESHOLD = 8; // ~25Km/h / 3.6m/s
+    public static float SPEED_STOPPED_THRESHOLD = 3; // ~10Km/h / 3.6m/s
 
     long serviceLoadTime = System.currentTimeMillis();
     BabyRepo babyRepo = null;
@@ -38,7 +40,7 @@ public class RideStateMachine {
     public void notifySpeedChange(float speed) {
 
         if (System.currentTimeMillis() - serviceLoadTime < BOOT_DELAY) {
-            Log.i(Config.MODULE_NAME ,"ignoring, boot");
+            Log.i(Config.MODULE_NAME, "ignoring, boot");
             return;
         }
 
@@ -46,7 +48,7 @@ public class RideStateMachine {
         sumLastSpeeds += speed;
 
         if (lastSpeeds.size() < (SPEED_MEASURES_COUNT + 1)) {
-            Log.i(Config.MODULE_NAME ,"Booting speed measure, already has: " + lastSpeeds.size());
+            Log.i(Config.MODULE_NAME, "Booting speed measure, already has: " + lastSpeeds.size());
             return;
         } else {
             sumLastSpeeds -= lastSpeeds.poll();
@@ -56,7 +58,7 @@ public class RideStateMachine {
         float averageSpeed = sumLastSpeeds / SPEED_MEASURES_COUNT;
         Log.d(Config.MODULE_NAME ,"Current average speed is " + averageSpeed);
 
-        if (averageSpeed > Config.SPEED_THRESHOLD) {
+        if (averageSpeed > SPEED_MOVING_THRESHOLD) {
 
             stoppedSince = 0;
             if (movingSince == 0) {
@@ -67,7 +69,7 @@ public class RideStateMachine {
                 }
             }
 
-        } else {
+        } else if (averageSpeed < SPEED_STOPPED_THRESHOLD) {
             movingSince = 0;
             if (stoppedSince == 0) {
                 stoppedSince = System.currentTimeMillis();
@@ -81,7 +83,6 @@ public class RideStateMachine {
                     handleRideStopped();
                 }
             }
-
         }
     }
 
