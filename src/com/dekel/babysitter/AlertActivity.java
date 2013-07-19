@@ -3,6 +3,7 @@ package com.dekel.babysitter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -64,9 +65,25 @@ public class AlertActivity extends Activity {
                 }
             });
 
+            playAlertSound();
+
         } else if (getIntent().getBooleanExtra(Config.SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA, false)) {
             showBluetoothAlert(titleView);
         }
+    }
+
+    MediaPlayer mp = null;
+    private void playAlertSound() {
+        mp = MediaPlayer.create(this, R.raw.sounds_774_springy);
+        mp.setVolume(1,1);
+        mp.setLooping(true);
+        mp.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mp.stop();
     }
 
     public void userChoiceAlone() {
