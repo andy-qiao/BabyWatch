@@ -33,7 +33,9 @@ public class MainActivity extends Activity {
         babyRepo = new BabyRepo(this);
 
         if (debugShowAlert) {
-            startActivity(new Intent(this, AlertActivity.class));
+            Intent i = new Intent(this, AlertActivity.class);
+            i.putExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, true);
+            startActivity(i);
         }
 
         if (!babyRepo.isFirstTimeCompleted()) { // First time!

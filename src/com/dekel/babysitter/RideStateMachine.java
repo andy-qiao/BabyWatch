@@ -39,7 +39,7 @@ public class RideStateMachine {
         }
         rideInProgress = false;
 
-        Log.d(Config.MODULE_NAME , "stopped!!!");
+        Log.d(Config.MODULE_NAME, "stopped!!!");
 
         if (rideWithBaby) {
             rideWithBaby = false;
@@ -51,9 +51,7 @@ public class RideStateMachine {
             userDialogInProgress = true;
 
             Log.d(Config.MODULE_NAME , "stopped with baby!!!");
-            Intent i = new Intent(context, FinishedRideActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            context.startActivity(i);
+            startAlertActivityWithIntent(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA);
         }
     }
 
@@ -131,11 +129,13 @@ public class RideStateMachine {
         rideInProgress = true;
         Log.d(Config.MODULE_NAME, "a ride in progress.");
 
-        Intent i = new Intent(context, AlertActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        context.startActivity(i);
+        startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
     }
 
-
-
+    private void startAlertActivityWithIntent(String s) {
+        Intent i = new Intent(context, AlertActivity.class);
+        i.putExtra(s, true);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP); // TODO
+        context.startActivity(i);
+    }
 }

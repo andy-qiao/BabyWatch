@@ -34,7 +34,7 @@ public class AlertActivity extends Activity {
         TextView yesView = (TextView) findViewById(R.id.yesView);
         yesView.setTypeface(typeFaceBold);
 
-        if (false) { // kind of alert TODO
+        if (getIntent().getBooleanExtra(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA, false)) {
             noView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
                     userChoiceAlone();
@@ -46,7 +46,7 @@ public class AlertActivity extends Activity {
                 }
             });
 
-        } else {
+        } else if (getIntent().getBooleanExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, false)) {
             titleView.setText("צריך טקסט חדש!");
             findViewById(R.id.barView3).setVisibility(View.VISIBLE);
             TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
@@ -63,12 +63,15 @@ public class AlertActivity extends Activity {
                     userChoiceFinishedRide();
                 }
             });
+
+        } else if (getIntent().getBooleanExtra(Config.SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA, false)) {
+            showBluetoothAlert(titleView);
         }
     }
 
     public void userChoiceAlone() {
-        Log.d(Config.MODULE_NAME,"userChoiceAlone!");
-        startBabyServiceWithIntent(Config.ALONE_INTENT_EXTRA);
+        Log.d(Config.MODULE_NAME, "userChoiceAlone!");
+        startBabyServiceWithIntent(Config.USER_CHOICE_ALONE_INTENT_EXTRA);
         Toast.makeText(this, "תודה! המערכת לא תתריע עבור נסיעה זו", Toast.LENGTH_LONG).show();
         finish();
         //                onBackPressed(); TODO
@@ -76,20 +79,20 @@ public class AlertActivity extends Activity {
 
     public void userChoiceWithBaby() {
         Log.d(Config.MODULE_NAME,"userChoiceWithBaby");
-        startBabyServiceWithIntent(Config.BABY_INTENT_EXTRA);
+        startBabyServiceWithIntent(Config.USER_CHOICE_BABY_INTENT_EXTRA);
         Toast.makeText(this, "תודה! בתום הנסיעה המערכת תתריע אוטומאטית", Toast.LENGTH_LONG).show();
         finish();
     }
 
     public void userChoiceFinishedRide() {
         Log.d(Config.MODULE_NAME, "userChoiceFinishedRide");
-        startBabyServiceWithIntent(Config.USER_FINISHED_RIDE_INTENT);
+        startBabyServiceWithIntent(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA);
         finish();
     }
 
     public void userChoiceHaventFinishedRide() {
         Log.d(Config.MODULE_NAME, "userChoiceHaventFinishedRide");
-        startBabyServiceWithIntent(Config.USER_HAVENT_FINISHED_RIDE_INTENT);
+        startBabyServiceWithIntent(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA);
         Toast.makeText(this, "תודה! המערכת תמשיך לנתר את המשך הנסיעה", Toast.LENGTH_LONG).show();
         finish();
     }

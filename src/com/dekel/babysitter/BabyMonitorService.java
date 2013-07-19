@@ -24,19 +24,19 @@ public class BabyMonitorService extends Service implements LocationListener {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        if (intent.hasExtra(Config.ALONE_INTENT_EXTRA)) {
+        if (intent.hasExtra(Config.USER_CHOICE_ALONE_INTENT_EXTRA)) {
             rsm.userRidingAlone();
         }
 
-        if (intent.hasExtra(Config.BABY_INTENT_EXTRA)) {
+        if (intent.hasExtra(Config.USER_CHOICE_BABY_INTENT_EXTRA)) {
             rsm.UserRidingWithBaby();
         }
 
-        if (intent.hasExtra(Config.USER_FINISHED_RIDE_INTENT)) {
+        if (intent.hasExtra(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA)) {
             rsm.userFinishedRide();
         }
 
-        if (intent.hasExtra(Config.USER_HAVENT_FINISHED_RIDE_INTENT)) {
+        if (intent.hasExtra(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA)) {
             rsm.userHasntFinishedRide();
         }
 

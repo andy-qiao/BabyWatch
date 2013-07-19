@@ -18,8 +18,6 @@
         </activity>
         <activity android:name=".AlertActivity"
                   android:screenOrientation="portrait"/>
-        <activity android:name=".FinishedRideActivity"
-                  android:screenOrientation="portrait"/>
         <receiver android:name=".BabyMonitorReceiver">
             <intent-filter >
                 <action android:name="android.bluetooth.headset.action.AUDIO_STATE_CHANGED" />
