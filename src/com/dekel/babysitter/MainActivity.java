@@ -12,17 +12,17 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-    private BabyRepo babyRepo = null;
-
     private enum SliderState {
         SHOWING_TOS,
         TOS_APPROVED_SHOWING_INTRO,
     }
 
     private boolean isRideInProgress = false; // TODO StateMachine.
-    private boolean demoError = false;
-    private boolean demoAlert = false;
+    private boolean debugShowError = false;
+    private boolean debugShowAlert = true;
     private SliderState sliderState = SliderState.SHOWING_TOS;
+    private BabyRepo babyRepo = null;
+
 
     /**
      * Called when the activity is first created.
@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
 
-        if (demoAlert) { // TODO debug remove me
+        if (debugShowAlert) {
             startActivity(new Intent(this, AlertActivity.class));
         }
 
@@ -118,7 +118,7 @@ public class MainActivity extends Activity {
             bodyView.setText("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)");
         }
 
-        if (demoError) {
+        if (debugShowError) {
             subtitleView.setText("אופס!");
             bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);

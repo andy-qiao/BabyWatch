@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,46 +34,97 @@ public class AlertActivity extends Activity {
         TextView yesView = (TextView) findViewById(R.id.yesView);
         yesView.setTypeface(typeFaceBold);
 
-        if (true) { // TODO
-            titleView.setText("זוהתה דיבורית חדשה!");
+        if (false) { // kind of alert TODO
+            noView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    userChoiceAlone();
+                }
+            });
+            yesView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    userChoiceWithBaby();
+                }
+            });
+
+        } else {
+            titleView.setText("צריך טקסט חדש!");
             findViewById(R.id.barView3).setVisibility(View.VISIBLE);
             TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
+            subtitleView.setText("האם הנסיעה הסתיימה וזכרת לקחת את תינוקך?");
             subtitleView.setVisibility(View.VISIBLE);
+
+            noView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    userChoiceHaventFinishedRide();
+                }
+            });
+            yesView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    userChoiceFinishedRide();
+                }
+            });
+        }
+    }
+
+    public void userChoiceAlone() {
+        Log.d(Config.MODULE_NAME,"userChoiceAlone!");
+        startBabyServiceWithIntent(Config.ALONE_INTENT_EXTRA);
+        Toast.makeText(this, "תודה! המערכת לא תתריע עבור נסיעה זו", Toast.LENGTH_LONG).show();
+        finish();
+        //                onBackPressed(); TODO
+    }
+
+    public void userChoiceWithBaby() {
+        Log.d(Config.MODULE_NAME,"userChoiceWithBaby");
+        startBabyServiceWithIntent(Config.BABY_INTENT_EXTRA);
+        Toast.makeText(this, "תודה! בתום הנסיעה המערכת תתריע אוטומאטית", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+    public void userChoiceFinishedRide() {
+        Log.d(Config.MODULE_NAME, "userChoiceFinishedRide");
+        startBabyServiceWithIntent(Config.USER_FINISHED_RIDE_INTENT);
+        finish();
+    }
+
+    public void userChoiceHaventFinishedRide() {
+        Log.d(Config.MODULE_NAME, "userChoiceHaventFinishedRide");
+        startBabyServiceWithIntent(Config.USER_HAVENT_FINISHED_RIDE_INTENT);
+        Toast.makeText(this, "תודה! המערכת תמשיך לנתר את המשך הנסיעה", Toast.LENGTH_LONG).show();
+        finish();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void showBluetoothAlert(TextView titleView) {
+        titleView.setText("זוהתה דיבורית חדשה!");
+        findViewById(R.id.barView3).setVisibility(View.VISIBLE);
+        TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
+        subtitleView.setVisibility(View.VISIBLE);
 //            String s = subtitleView.getText().toString();
 //            subtitleView.setText(s.replace(getIntent().getStringExtra("device_name"), "MARKER"));
-            // TODO
-
-
-        }
-
-        noView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                alone();
-                onBackPressed();
-            }
-        });
-
-
-        yesView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                withBaby();
-                onBackPressed();
-            }
-        });
     }
 
-    public void alone() {
-        Log.d(Config.MODULE_NAME,"alone!");
+    private void startBabyServiceWithIntent(String s) {
         Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra(Config.ALONE_INTENT_EXTRA, true);
-        startService(i);
-
-    }
-
-    public void withBaby() {
-        Log.d(Config.MODULE_NAME,"baby!!!");
-        Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra(Config.BABY_INTENT_EXTRA, true);
+        i.putExtra(s, true);
         startService(i);
     }
 }

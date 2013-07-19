@@ -35,16 +35,16 @@ public class FinishedRideActivity extends Activity {
     }
 
     public void userFinishedRide() {
-        Log.d("bla", "userFinishedRide");
+        Log.d("bla", "userChoiceFinishedRide");
         Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra("userFinishedRide", true);
+        i.putExtra("userChoiceFinishedRide", true);
         startService(i);
     }
 
     public void userHaventFinishedRide() {
-        Log.d("bla", "userHaventFinishedRide");
+        Log.d("bla", "userChoiceHaventFinishedRide");
         Intent i = new Intent(this, BabyMonitorService.class);
-        i.putExtra("userHaventFinishedRide", true);
+        i.putExtra("userChoiceHaventFinishedRide", true);
         startService(i);
     }
 }
