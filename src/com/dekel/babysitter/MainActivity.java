@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
             showFirstTimeSlider();
 
         } else {
-            showSystemReady();
+            showStatefulHome();
         }
 
         InitializeMonitoring();          // TODO maybe not alwys?
@@ -98,14 +98,14 @@ public class MainActivity extends Activity {
 
                 case TOS_APPROVED_SHOWING_INTRO:
                     babyRepo.setFirstTimeCompleted();
-                    showSystemReady();
+                    showStatefulHome();
                     break;
             }
             }
         });
     }
 
-    private void showSystemReady() {
+    private void showStatefulHome() {
         setContentView(R.layout.main);
 
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
