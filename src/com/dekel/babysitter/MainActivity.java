@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.LinkedList;
+
 public class MainActivity extends Activity {
 
     private enum SliderState {
@@ -136,7 +138,17 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
     private void easterEggHandling() {
-        Log.d(Config.MODULE_NAME, "easter_egg attempt");
+        Log.d(Config.MODULE_NAME, "easter_egg " + System.currentTimeMillis());
+        easterEggTimestamps.add(System.currentTimeMillis());
+        if (easterEggTimestamps.size() < 7) {
+            return;
+        }
+        if (easterEggTimestamps.poll() > System.currentTimeMillis() - 2*1000) {
+            Log.w(Config.MODULE_NAME, "easter_egg");
+            startActivity(new Intent(this, DebugActivity.class));
+        }
     }
 }
