@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.LinkedList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: dekelna
@@ -12,7 +14,8 @@ import android.util.Log;
  */
 public class RideStateMachine {
     public static final int BOOT_DELAY = 5 * 1000;
-    public static final int MOVING_MIN_TIME = 30 * 1000;
+    public static final int SPEED_MEASURES_COUNT = 10;
+    public static final int MOVING_MIN_TIME = 15 * 1000;
     public static final int STOPPING_MIN_TIME = 5 * 60 * 1000;
     public static final int FALSE_POSITIVE_STOP = 5 * 60 * 1000;
 
@@ -29,14 +32,31 @@ public class RideStateMachine {
         babyRepo = new BabyRepo(context);
     }
 
+    LinkedList<Float> lastSpeeds = new LinkedList<Float>();
+    float sumLastSpeeds = 0;
+
     public void notifySpeedChange(float speed) {
 
         if (System.currentTimeMillis() - serviceLoadTime < BOOT_DELAY) {
-            Log.d(Config.MODULE_NAME ,"ignoring, boot");
+            Log.i(Config.MODULE_NAME ,"ignoring, boot");
             return;
         }
 
-        if (speed > Config.SPEED_THRESHOLD) {
+        lastSpeeds.add(speed);
+        sumLastSpeeds += speed;
+
+        if (lastSpeeds.size() < (SPEED_MEASURES_COUNT + 1)) {
+            Log.i(Config.MODULE_NAME ,"Booting speed measure, already has: " + lastSpeeds.size());
+            return;
+        } else {
+            sumLastSpeeds -= lastSpeeds.poll();
+            assert lastSpeeds.size() == SPEED_MEASURES_COUNT;
+        }
+
+        float averageSpeed = sumLastSpeeds / SPEED_MEASURES_COUNT;
+        Log.d(Config.MODULE_NAME ,"Current average speed is " + averageSpeed);
+
+        if (averageSpeed > Config.SPEED_THRESHOLD) {
 
             stoppedSince = 0;
             if (movingSince == 0) {
