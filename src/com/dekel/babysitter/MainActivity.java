@@ -49,12 +49,14 @@ public class MainActivity extends Activity {
 
         InitializeMonitoring();          // TODO maybe not alwys?
 
-        Log.d(Config.MODULE_NAME, "Init done!");
+        Log.d(Config.MODULE_NAME, "MainActivity - Init done!");
     }
 
     private void InitializeMonitoring() {
         // TODO alarm service for BT
         // TODO when ride in progress - present it here - singleton?
+
+        // TODO mabe initialize that with the service?
 
 //        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
 //        Intent intent = new Intent(this, BabyMonitorReceiver.class);
@@ -114,9 +116,17 @@ public class MainActivity extends Activity {
         final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
         subtitleView.setTypeface(FontUtils.getTypefaceBold(this));
 
-        if (babyRepo.isRideInProgress()) { // TODO baby as well
+        findViewById(R.id.mainImageReady).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                easterEggHandling();
+            }
+        });
+
+        if (babyRepo.isRideInProgress()) {
             subtitleView.setText("יצאנו לדרך");
-            bodyView.setText("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)");
+            bodyView.setText(babyRepo.isBabyInCar() ?
+                new String("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)") :
+                new String("שירות התרעה אינו מופעל עבור נסיעה זו"));
         }
 
         if (debugShowError) {
@@ -124,5 +134,9 @@ public class MainActivity extends Activity {
             bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
+    }
+
+    private void easterEggHandling() {
+        Log.d(Config.MODULE_NAME, "easter_egg attempt");
     }
 }
