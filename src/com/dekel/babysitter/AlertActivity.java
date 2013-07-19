@@ -23,6 +23,8 @@ public class AlertActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.ride_started_alert);
+        mp = MediaPlayer.create(this, R.raw.sounds_774_springy);
+
         Typeface typeFace = Typeface.createFromAsset(getAssets(),"Alef-Regular.ttf");
         Typeface typeFaceBold = Typeface.createFromAsset(getAssets(),"Alef-Bold.ttf");
 
@@ -74,7 +76,6 @@ public class AlertActivity extends Activity {
 
     MediaPlayer mp = null;
     private void playAlertSound() {
-        mp = MediaPlayer.create(this, R.raw.sounds_774_springy);
         mp.setVolume(1,1);
         mp.setLooping(true);
         mp.start();

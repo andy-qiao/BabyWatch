@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
 
     private boolean isRideInProgress = false; // TODO StateMachine.
     private boolean debugShowError = false;
-    private boolean debugShowAlert = true;
+    private boolean debugShowAlert = false;
     private SliderState sliderState = SliderState.SHOWING_TOS;
     private BabyRepo babyRepo = null;
 
@@ -34,7 +34,7 @@ public class MainActivity extends Activity {
 
         if (debugShowAlert) {
             Intent i = new Intent(this, AlertActivity.class);
-            i.putExtra(Config.SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA, true);
+            i.putExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, true);
             i.putExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA, "Motorola HK-200");
 
             startActivity(i);
@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
             showSystemReady();
         }
 
-        InitializeMonitoring();
+        InitializeMonitoring();          // TODO maybe not alwys?
 
         Log.d(Config.MODULE_NAME, "Init done!");
     }
@@ -117,7 +117,7 @@ public class MainActivity extends Activity {
         final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
         subtitleView.setTypeface(typeFaceBold);
 
-        if (isRideInProgress) {
+        if (babyRepo.isRideInProgress()) { // TODO baby as well
             subtitleView.setText("יצאנו לדרך");
             bodyView.setText("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)");
         }

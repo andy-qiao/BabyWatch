@@ -19,26 +19,12 @@ import android.util.Log;
 public class BabyMonitorService extends Service implements LocationListener {
 
     LocationManager locationManager = null;
-    RideStateMachine rsm = new RideStateMachine(this); // TODO here?
+    RideStateMachine rsm = null;
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-
-        if (intent.hasExtra(Config.USER_CHOICE_ALONE_INTENT_EXTRA)) {
-            rsm.userRidingAlone();
-        }
-
-        if (intent.hasExtra(Config.USER_CHOICE_BABY_INTENT_EXTRA)) {
-            rsm.UserRidingWithBaby();
-        }
-
-        if (intent.hasExtra(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA)) {
-            rsm.userFinishedRide();
-        }
-
-        if (intent.hasExtra(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA)) {
-            rsm.userHasntFinishedRide();
-        }
+    public void onCreate() {
+        super.onCreate();
+        rsm = new RideStateMachine(this);
 
         // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -46,6 +32,28 @@ public class BabyMonitorService extends Service implements LocationListener {
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
 
         Log.d(Config.MODULE_NAME, "Registered location service!");
+
+        rsm.handleRideStarted(); // TODO DEBUG
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if (intent.hasExtra(Config.USER_CHOICE_ALONE_INTENT_EXTRA)) {
+            rsm.userChoiceRidingAlone();
+        }
+
+        if (intent.hasExtra(Config.USER_CHOICE_BABY_INTENT_EXTRA)) {
+            rsm.UserChoiceRidingWithBaby();
+        }
+
+        if (intent.hasExtra(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA)) {
+            rsm.userChoiseFinishedRide();
+        }
+
+        if (intent.hasExtra(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA)) {
+            rsm.userChoiceHasntFinishedRide();
+        }
 
         return super.onStartCommand(intent, flags, startId);
     }
