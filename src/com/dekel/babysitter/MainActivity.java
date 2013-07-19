@@ -34,7 +34,9 @@ public class MainActivity extends Activity {
 
         if (debugShowAlert) {
             Intent i = new Intent(this, AlertActivity.class);
-            i.putExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, true);
+            i.putExtra(Config.SHOW_NEW_BLUETOOTH_DEVICE_ALERT_INTENT_EXTRA, true);
+            i.putExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA, "Motorola HK-200");
+
             startActivity(i);
         }
 
