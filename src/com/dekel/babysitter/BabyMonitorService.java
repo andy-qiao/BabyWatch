@@ -53,6 +53,9 @@ public class BabyMonitorService extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d(Config.MODULE_NAME, "onLocationChanged called!");
+        if (!location.hasSpeed()) {
+            return;
+        }
 
         float speed = getSpeed(location);
         Log.d(Config.MODULE_NAME , "speed=" + speed);
