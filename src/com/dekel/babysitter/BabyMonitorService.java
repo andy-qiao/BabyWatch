@@ -55,7 +55,7 @@ public class BabyMonitorService extends Service implements LocationListener {
             rsm.userChoiceHasntFinishedRide();
         }
 
-        return super.onStartCommand(intent, flags, startId);
+        return START_REDELIVER_INTENT;
     }
 
     @Override
