@@ -2,7 +2,6 @@ package com.dekel.babysitter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,13 +12,15 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
+    private BabyRepo babyRepo = null;
+
     private enum SliderState {
         SHOWING_TOS,
         TOS_APPROVED_SHOWING_INTRO,
     }
 
     private boolean isRideInProgress = false; // TODO StateMachine.
-    private boolean demoError = true;
+    private boolean demoError = false;
     private boolean demoAlert = false;
     private SliderState sliderState = SliderState.SHOWING_TOS;
 
@@ -29,12 +30,13 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        babyRepo = new BabyRepo(this);
 
         if (demoAlert) { // TODO debug remove me
             startActivity(new Intent(this, AlertActivity.class));
         }
 
-        if (!isFirstTimeCompleted()) { // First time!
+        if (!babyRepo.isFirstTimeCompleted()) { // First time!
             showFirstTimeSlider();
 
         } else {
@@ -91,22 +93,12 @@ public class MainActivity extends Activity {
                     break;
 
                 case TOS_APPROVED_SHOWING_INTRO:
-                    setFirstTimeCompleted();
+                    babyRepo.setFirstTimeCompleted();
                     showSystemReady();
                     break;
             }
             }
         });
-    }
-
-    private boolean isFirstTimeCompleted() {
-        return getSharedPreferences(Config.MODULE_MAIN_PREFERENCE, MODE_PRIVATE).getBoolean(Config.FIRST_RUN_COMPLETED_KEY, false);
-    }
-
-    private void setFirstTimeCompleted() {
-        SharedPreferences.Editor e = getSharedPreferences(Config.MODULE_MAIN_PREFERENCE, MODE_PRIVATE).edit();
-        e.putBoolean(Config.FIRST_RUN_COMPLETED_KEY, true);
-        e.commit();
     }
 
     private void showSystemReady() {
