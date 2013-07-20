@@ -16,6 +16,6 @@
     <string name="started_baby_not_in_car_text">שירות התרעה אינו מופעל עבור נסיעה זו</string>
     <string name="toast_started_without_baby">תודה! המערכת לא תתריע עבור נסיעה זו</string>
     <string name="toast_started_with_baby">תודה! בתום הנסיעה המערכת תתריע אוטומאטית</string>
-    <string name="toast_finished_still_going">תודה! המערכת תמשיך לנתר את המשך הנסיעה</string>
+    <string name="toast_finished_still_going">תודה! המערכת תמשיך לנטר את המשך הנסיעה</string>
     <string name="toast_finished_done">תודה! המשך יום נעים!</string>
 </resources>
