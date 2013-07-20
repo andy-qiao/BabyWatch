@@ -94,40 +94,39 @@ public class AlertActivity extends Activity {
     public void userChoiceAlone() {
         Log.d(Config.MODULE_NAME, "userChoiceAlone!");
         startBabyServiceWithIntent(Config.USER_CHOICE_ALONE_INTENT_EXTRA);
-        Toast.makeText(this, "תודה! המערכת לא תתריע עבור נסיעה זו", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.toast_started_without_baby, Toast.LENGTH_LONG).show();
         finish();
     }
 
     public void userChoiceWithBaby() {
         Log.d(Config.MODULE_NAME,"userChoiceWithBaby");
         startBabyServiceWithIntent(Config.USER_CHOICE_BABY_INTENT_EXTRA);
-        Toast.makeText(this, "תודה! בתום הנסיעה המערכת תתריע אוטומאטית", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.toast_started_with_baby, Toast.LENGTH_LONG).show();
         finish();
     }
 
     public void userChoiceFinishedRide() {
         Log.d(Config.MODULE_NAME, "userChoiceFinishedRide");
         startBabyServiceWithIntent(Config.USER_CHOICE_FINISHED_RIDE_INTENT_EXTRA);
+        Toast.makeText(this, R.string.toast_finished_done, Toast.LENGTH_LONG).show();
         finish();
     }
 
     public void userChoiceHaventFinishedRide() {
         Log.d(Config.MODULE_NAME, "userChoiceHaventFinishedRide");
         startBabyServiceWithIntent(Config.USER_CHOICE_HAVENT_FINISHED_RIDE_INTENT_EXTRA);
-        Toast.makeText(this, "תודה! המערכת תמשיך לנתר את המשך הנסיעה", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.toast_finished_still_going, Toast.LENGTH_LONG).show();
         finish();
     }
 
     private void showBluetoothAlert(TextView titleView) {
-        titleView.setText(R.string.new_device);
+        titleView.setText(R.string.new_device_title);
         findViewById(R.id.barView3).setVisibility(View.VISIBLE);
         TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
 
-        subtitleView.setText(
-            new String("המערכת זיהתה כי הרגע בוצע חיבור לדיבורית מדגם ") +
+        subtitleView.setText(R.string.new_device_text_prefix +
             getIntent().getStringExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA) +
-            new String(". האם זהו התקן דיבורית קבוע ברכבך?")
-        );
+            R.string.new_device_text_suffix);
 
         subtitleView.setVisibility(View.VISIBLE);
     }
