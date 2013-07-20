@@ -33,8 +33,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
 
-        if (true) {
-//        if (!babyRepo.isFirstTimeCompleted()) { // First time!
+        if (!babyRepo.isFirstTimeCompleted()) { // First time!
             showFirstTimeSlider();
 
         } else {
@@ -80,7 +79,6 @@ public class MainActivity extends Activity {
         });
     }
 
-
     private void showStatefulHome() {
         setContentView(R.layout.main);
 
@@ -108,7 +106,6 @@ public class MainActivity extends Activity {
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
     }
-
 
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
     private void easterEggHandling() {
