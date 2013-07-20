@@ -16,7 +16,7 @@ public class RideStateMachine {
     public static final int BOOT_DELAY = 5 * 1000;
     public static final int SPEED_MEASURES_COUNT = 10;
     public static final int MOVING_MIN_TIME = 15 * 1000;
-    public static final int STOPPING_MIN_TIME = 5 * 60 * 1000 / 10; // TODO DEBUG
+    public static final int STOPPING_MIN_TIME = 5 * 60 * 1000;
     public static final int FALSE_POSITIVE_STOP = 5 * 60 * 1000;
     public static float SPEED_MOVING_THRESHOLD = 8; // ~25Km/h / 3.6m/s
     public static float SPEED_STOPPED_THRESHOLD = 3; // ~10Km/h / 3.6m/s
@@ -71,9 +71,7 @@ public class RideStateMachine {
 
             } else {
                 if (System.currentTimeMillis() - movingSince > MOVING_MIN_TIME) {
-                    debug();
                     handleRideStarted();
-                    debug();
                 }
             }
 
@@ -89,17 +87,10 @@ public class RideStateMachine {
 
             } else {
                 if (System.currentTimeMillis() - stoppedSince > STOPPING_MIN_TIME) {
-                    debug();
                     handleRideStopped();
-                    debug();
                 }
             }
         }
-    }
-
-    private void debug() {
-        Log.d(Config.MODULE_NAME, "ddd isRideInProgress=" + babyRepo.isRideInProgress());
-        Log.d(Config.MODULE_NAME, "ddd isBabyInCar=" + babyRepo.isBabyInCar());
     }
 
     private void handleRideStarted() {
@@ -127,33 +118,28 @@ public class RideStateMachine {
     public void userChoiceHasntFinishedRide() {
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(true);
-        debug();
         user_havent_stopped_override = System.currentTimeMillis();
     }
 
     public void userChoiseFinishedRide() {
         babyRepo.setRideInProgress(false);
         babyRepo.setBabyInCar(false);
-        debug();
     }
 
     public void UserChoiceRidingWithBaby() {
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(true);
-        debug();
     }
 
     public void userChoiceRidingAlone() {
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(false);
-        debug();
     }
 
     private void startAlertActivityWithIntent(String s) {
         Intent i = new Intent(context, AlertActivity.class);
         i.putExtra(s, true);
-        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // TODO
-        debug();
+        i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(i);
     }
 }

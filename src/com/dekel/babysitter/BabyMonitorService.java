@@ -33,7 +33,7 @@ public class BabyMonitorService extends Service implements LocationListener {
         locationManager.getLastKnownLocation("speed"); // TODO is it necessary?
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
-        initializeAlarmManager();
+        // initializeAlarmManager(); // TODO for BT
 
         Log.d(Config.MODULE_NAME, "Registered location service!");
     }
