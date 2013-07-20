@@ -50,28 +50,9 @@ public class MainActivity extends Activity {
             showStatefulHome();
         }
 
-        InitializeMonitoring();          // TODO maybe not alwys?
+        startService(new Intent(this, BabyMonitorService.class));
 
         Log.d(Config.MODULE_NAME, "MainActivity - Init done!");
-    }
-
-    private void InitializeMonitoring() {
-        // TODO alarm service for BT
-        // TODO when ride in progress - present it here - singleton?
-
-        // TODO mabe initialize that with the service?
-
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(this, BabyMonitorReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        am.cancel(pi);
-
-        am.setInexactRepeating(AlarmManager.RTC,
-                System.currentTimeMillis(),
-                500, // AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                pi);
-
-        startService(new Intent(this, BabyMonitorService.class));
     }
 
     private void showFirstTimeSlider() {

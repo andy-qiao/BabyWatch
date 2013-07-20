@@ -1,5 +1,7 @@
 package com.dekel.babysitter;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -29,9 +31,24 @@ public class BabyMonitorService extends Service implements LocationListener {
         // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.getLastKnownLocation("speed"); // TODO is it necessary?
-        locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+
+        initializeAlarmManager();
 
         Log.d(Config.MODULE_NAME, "Registered location service!");
+    }
+
+    private void initializeAlarmManager() {
+        // TODO should i just be a receiver? without AM?
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, BabyMonitorReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+        am.cancel(pi);
+
+        am.setInexactRepeating(AlarmManager.RTC,
+                System.currentTimeMillis(),
+                500, // AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                pi);
     }
 
     @Override
@@ -74,7 +91,8 @@ public class BabyMonitorService extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d(Config.MODULE_NAME, "onLocationChanged called!");
-        if (!location.hasSpeed() || override_speed != -1.0f) {
+
+        if (override_speed == -1.0f && !location.hasSpeed()) {
             return;
         }
 
