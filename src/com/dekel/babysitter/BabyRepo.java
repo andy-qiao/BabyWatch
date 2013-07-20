@@ -33,14 +33,6 @@ public class BabyRepo {
         setBoolean(Config.BABY_IN_CAR_KEY, v);
     }
 
-    boolean isDialogPendingUser() {
-        return sp.getBoolean(Config.DIALOG_PENDING_USER_KEY, false);
-    }
-
-    void setDialogPendingUser(boolean v) {
-        setBoolean(Config.DIALOG_PENDING_USER_KEY, v);
-    }
-
     private void setBoolean(String k, boolean v) {
         SharedPreferences.Editor e = sp.edit();
         e.putBoolean(k, v);

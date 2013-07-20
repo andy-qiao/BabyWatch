@@ -12,7 +12,6 @@ public class Config {
     public static final String FIRST_RUN_COMPLETED_KEY = "first_run";
     public static final String RIDE_IN_PROGRESS_KEY = "ride_in_progress";
     public static final String BABY_IN_CAR_KEY = "baby_in_car";
-    public static final String DIALOG_PENDING_USER_KEY = "dialog_pending_user";
 
     public static final String USER_CHOICE_BABY_INTENT_EXTRA = "userChoiceBaby";
     public static final String USER_CHOICE_ALONE_INTENT_EXTRA = "userChoiceAlone";

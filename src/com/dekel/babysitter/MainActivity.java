@@ -34,7 +34,6 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
-        babyRepo.setDialogPendingUser(false); // TODO checkme
 
         if (debugShowAlert) {
             Intent i = new Intent(this, AlertActivity.class);

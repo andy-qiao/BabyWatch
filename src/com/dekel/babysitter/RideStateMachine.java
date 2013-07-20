@@ -100,18 +100,12 @@ public class RideStateMachine {
     private void debug() {
         Log.d(Config.MODULE_NAME, "ddd isRideInProgress=" + babyRepo.isRideInProgress());
         Log.d(Config.MODULE_NAME, "ddd isBabyInCar=" + babyRepo.isBabyInCar());
-        Log.d(Config.MODULE_NAME, "ddd isDialogPendingUser=" + babyRepo.isDialogPendingUser());
     }
 
     private void handleRideStarted() {
         Log.d(Config.MODULE_NAME, "handleRideStarted");
         if (babyRepo.isRideInProgress()) return;
         babyRepo.setRideInProgress(true);
-
-        // if (babyRepo.isDialogPendingUser()) {
-        //     return;
-        //     // TODO what's the expected behaviour?
-        // }
 
         Log.d(Config.MODULE_NAME, Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
         startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
@@ -125,19 +119,12 @@ public class RideStateMachine {
         if (babyRepo.isBabyInCar()) {
             babyRepo.setBabyInCar(false);
 
-            // if (babyRepo.isDialogPendingUser()) {
-            //     // TODO what's the expected behaviour?
-            //     // TODO maybe alert without sound? medium alert? diffrent text?
-            //     return;
-            // }
-
             Log.d(Config.MODULE_NAME , Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA);
             startAlertActivityWithIntent(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA);
         }
     }
 
     public void userChoiceHasntFinishedRide() {
-        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(true);
         debug();
@@ -145,28 +132,24 @@ public class RideStateMachine {
     }
 
     public void userChoiseFinishedRide() {
-        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(false);
         babyRepo.setBabyInCar(false);
         debug();
     }
 
     public void UserChoiceRidingWithBaby() {
-        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(true);
         debug();
     }
 
     public void userChoiceRidingAlone() {
-        babyRepo.setDialogPendingUser(false);
         babyRepo.setRideInProgress(true);
         babyRepo.setBabyInCar(false);
         debug();
     }
 
     private void startAlertActivityWithIntent(String s) {
-        babyRepo.setDialogPendingUser(true);
         Intent i = new Intent(context, AlertActivity.class);
         i.putExtra(s, true);
         i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK); // TODO

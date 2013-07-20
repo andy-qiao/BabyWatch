@@ -36,7 +36,7 @@ public class DebugActivity extends Activity {
 
         findViewById(R.id.clearPending).setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                new BabyRepo(DebugActivity.this).setDialogPendingUser(false);
+
             }
         });
     }
