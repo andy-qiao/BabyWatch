@@ -7,7 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,8 +29,8 @@ public class BabyMonitorReceiver extends BroadcastReceiver {
         Log.d(Config.MODULE_NAME, "onReceive.");
         this.context = context;
 
-        Log.d(Config.MODULE_NAME, "DEBUG INTENT " + intent.getAction());
-        Log.d(Config.MODULE_NAME, "device " + intent.getStringExtra("android.bluetooth.device.extra.DEVICE"));
+//        Log.d(Config.MODULE_NAME, "DEBUG INTENT " + intent.getAction());
+//        Log.d(Config.MODULE_NAME, "device " + intent.getStringExtra("android.bluetooth.device.extra.DEVICE"));
         if(ACTION_BT_HEADSET_STATE_CHANGED.equals(intent.getAction())){
             int extraData = intent.getIntExtra(EXTRA_STATE  , STATE_DISCONNECTED);
             if (extraData == STATE_CONNECTED ){
@@ -44,6 +45,10 @@ public class BabyMonitorReceiver extends BroadcastReceiver {
 
 
         }
+
+        Intent i = new Intent(context, BabyMonitorService.class);
+        i.putExtra("DEBUG", true);
+        context.startService(i);
 
 
 

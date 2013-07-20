@@ -32,12 +32,17 @@ public class BabyMonitorService extends Service implements LocationListener {
         locationManager.requestLocationUpdates( LocationManager.GPS_PROVIDER, 0, 0, this);
 
         Log.d(Config.MODULE_NAME, "Registered location service!");
-
-        rsm.handleRideStarted(); // TODO DEBUG
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+
+        if (intent == null) return START_STICKY;
+
+        if (intent.hasExtra("DEBUG")) {
+            if (override_speed == -1.0f) override_speed = 0.0f;
+            onLocationChanged(null);
+        }
 
         if (intent.hasExtra(Config.DEBUG_SPEED_INTENT_EXTRA)) {
             override_speed = intent.getFloatExtra(Config.DEBUG_SPEED_INTENT_EXTRA, -1);
@@ -69,7 +74,7 @@ public class BabyMonitorService extends Service implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d(Config.MODULE_NAME, "onLocationChanged called!");
-        if (!location.hasSpeed()) {
+        if (!location.hasSpeed() || override_speed != -1.0f) {
             return;
         }
 
@@ -79,9 +84,9 @@ public class BabyMonitorService extends Service implements LocationListener {
         rsm.notifySpeedChange(speed);
     }
 
-    private float override_speed = -1;
+    private float override_speed = -1.0f;
     private float getSpeed(Location location) {
-        if (override_speed != -1) {
+        if (override_speed != -1.0f) {
             return override_speed;
         }
 

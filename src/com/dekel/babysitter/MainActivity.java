@@ -1,8 +1,9 @@
 package com.dekel.babysitter;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
+        babyRepo.setDialogPendingUser(false); // TODO checkme
 
         if (debugShowAlert) {
             Intent i = new Intent(this, AlertActivity.class);
@@ -60,15 +62,15 @@ public class MainActivity extends Activity {
 
         // TODO mabe initialize that with the service?
 
-//        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-//        Intent intent = new Intent(this, BabyMonitorReceiver.class);
-//        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-//        am.cancel(pi); // cancel any existing alarms
-//
-//        am.setInexactRepeating(AlarmManager.RTC,
-//                System.currentTimeMillis(),
-//                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-//                pi);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, BabyMonitorReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+        am.cancel(pi);
+
+        am.setInexactRepeating(AlarmManager.RTC,
+                System.currentTimeMillis(),
+                500, // AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                pi);
 
         startService(new Intent(this, BabyMonitorService.class));
     }
