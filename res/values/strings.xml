@@ -12,7 +12,7 @@
     <string name="started_title">יצאנו לדרך</string>
     <string name="error_title">אופס!</string>
     <string name="error_text">המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל</string>
-    <string name="started_baby_in_car_text">עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)</string>
+    <string name="started_baby_in_car_text">עם סיום הנסיעה המערכת תזכיר לכם לוודא כי ילדכם\nלא נשאר ברכב :)</string>
     <string name="started_baby_not_in_car_text">שירות התרעה אינו מופעל עבור נסיעה זו</string>
     <string name="toast_started_without_baby">תודה! המערכת לא תתריע עבור נסיעה זו</string>
     <string name="toast_started_with_baby">תודה! בתום הנסיעה המערכת תתריע אוטומאטית</string>
