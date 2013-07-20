@@ -20,7 +20,7 @@ public class AlertActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.ride_started_alert);
+        setContentView(R.layout.ride_alert);
         mp = MediaPlayer.create(this, R.raw.sounds_774_springy);
 
 
