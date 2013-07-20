@@ -2,7 +2,6 @@ package com.dekel.babysitter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,6 +70,12 @@ public class AlertActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+    }
+
     MediaPlayer mp = null;
     private void playAlertSound() {
         mp.setVolume(1,1);
@@ -82,6 +87,8 @@ public class AlertActivity extends Activity {
     protected void onPause() {
         super.onPause();
         mp.stop();
+
+        // TODO notify service user didnt choose anything
     }
 
     public void userChoiceAlone() {
@@ -89,7 +96,6 @@ public class AlertActivity extends Activity {
         startBabyServiceWithIntent(Config.USER_CHOICE_ALONE_INTENT_EXTRA);
         Toast.makeText(this, "תודה! המערכת לא תתריע עבור נסיעה זו", Toast.LENGTH_LONG).show();
         finish();
-        //                onBackPressed(); TODO
     }
 
     public void userChoiceWithBaby() {
