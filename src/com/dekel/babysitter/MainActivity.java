@@ -33,16 +33,20 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
 
+        showRelevantHome();
+
+        startService(new Intent(this, BabyMonitorService.class));
+
+        Log.d(Config.MODULE_NAME, "MainActivity - Init done!");
+    }
+
+    private void showRelevantHome() {
         if (!babyRepo.isFirstTimeCompleted()) { // First time!
             showFirstTimeSlider();
 
         } else {
             showStatefulHome();
         }
-
-        startService(new Intent(this, BabyMonitorService.class));
-
-        Log.d(Config.MODULE_NAME, "MainActivity - Init done!");
     }
 
     private void showFirstTimeSlider() {
@@ -110,7 +114,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        showStatefulHome();
+        showRelevantHome();
     }
 
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
