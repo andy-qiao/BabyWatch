@@ -107,6 +107,12 @@ public class MainActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showStatefulHome();
+    }
+
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
     private void easterEggHandling() {
         Log.d(Config.MODULE_NAME, "easter_egg " + System.currentTimeMillis());
