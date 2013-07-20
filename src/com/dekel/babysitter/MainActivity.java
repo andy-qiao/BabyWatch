@@ -20,9 +20,7 @@ public class MainActivity extends Activity {
         TOS_APPROVED_SHOWING_INTRO,
     }
 
-    private boolean isRideInProgress = false; // TODO StateMachine.
-    private boolean debugShowError = false;
-    private boolean debugShowAlert = false;
+    // TODO add hours matching to avoid false positives. // TODO hours change registration as well.
     private SliderState sliderState = SliderState.SHOWING_TOS;
     private BabyRepo babyRepo = null;
 
@@ -34,14 +32,6 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
-
-        if (debugShowAlert) {
-            Intent i = new Intent(this, AlertActivity.class);
-            i.putExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, true);
-            i.putExtra(Config.BLUETOOTH_DEVICE_NAME_INTENT_EXTRA, "Motorola HK-200");
-
-            startActivity(i);
-        }
 
         if (!babyRepo.isFirstTimeCompleted()) { // First time!
             showFirstTimeSlider();
@@ -113,7 +103,7 @@ public class MainActivity extends Activity {
                 new String("שירות התרעה אינו מופעל עבור נסיעה זו"));
         }
 
-        if (debugShowError) {
+        if (false) {                 // TODO Handle case where GPS & BT are unavailable.
             subtitleView.setText("אופס!");
             bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
