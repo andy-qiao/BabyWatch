@@ -50,7 +50,7 @@
             android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>
     <TextView android:layout_width="fill_parent" android:layout_height="wrap_content"
               android:textScaleX="1.0"
-              android:text="בשעת נסיעה המערכת תזהה עצירות ממושכות ותזכיר לכם לוודא שלא שכחתם אף אחד באוטו" 
+              android:text="המערכת פעילה ומנטרת כעת. עם תחילת נסיעה תיכנס המערכת לפעולה בצורה אוטומטית."
               android:textSize="26dp" android:id="@+id/mainBodyTextView1"
               android:textColor="#000000" android:layout_marginTop="20dp"
               android:layout_marginBottom="50dp" android:gravity="center_horizontal" android:textStyle="bold"
