@@ -46,10 +46,10 @@ public class AlertActivity extends Activity {
             });
 
         } else if (getIntent().getBooleanExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, false)) {
-            titleView.setText("צריך טקסט חדש!");
+            titleView.setText(R.string.ride_finished_title);
             findViewById(R.id.barView3).setVisibility(View.VISIBLE);
             TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
-            subtitleView.setText("האם הנסיעה הסתיימה וזכרת לקחת את תינוקך?");
+            subtitleView.setText(R.string.ride_finished_text);
             subtitleView.setVisibility(View.VISIBLE);
 
             noView.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +119,7 @@ public class AlertActivity extends Activity {
     }
 
     private void showBluetoothAlert(TextView titleView) {
-        titleView.setText("זוהתה דיבורית חדשה!");
+        titleView.setText(R.string.new_device);
         findViewById(R.id.barView3).setVisibility(View.VISIBLE);
         TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
 

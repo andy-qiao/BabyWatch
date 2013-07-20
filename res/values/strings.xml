@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">נוסעים לגן</string>
+    <string name="about_subtitle">על \"נוסעים לגן\"</string>
+    <string name="about_text">אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב. זמן קצר לאחר סיום הנסיעה המערכת תזכיר לכם לוודא שלא שכחתם את ילדכם\n</string>
+    <string name="about_continue">המשך</string>
+    <string name="ride_finished_title">צריך טקסט חדש!</string>
+    <string name="ride_finished_text">האם הנסיעה הסתיימה וזכרת לקחת את תינוקך?</string>
+    <string name="new_device">זוהתה דיבורית חדשה!</string>
+    <string name="started_title">יצאנו לדרך</string>
+    <string name="error_title">אופס!</string>
+    <string name="error_text">המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל</string>
+
+    <string name="started_baby_in_car_text">עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)</string>
+    <string name="started_baby_not_in_car_text">שירות התרעה אינו מופעל עבור נסיעה זו</string>
+
 </resources>

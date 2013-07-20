@@ -33,7 +33,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
 
-        if (!babyRepo.isFirstTimeCompleted()) { // First time!
+        if (true) {
+//        if (!babyRepo.isFirstTimeCompleted()) { // First time!
             showFirstTimeSlider();
 
         } else {
@@ -65,9 +66,9 @@ public class MainActivity extends Activity {
                 case SHOWING_TOS:
                     sliderState = SliderState.TOS_APPROVED_SHOWING_INTRO;
                     // Live switching
-                    subtitleView.setText("על \"נוסעים לגן\"");
-                    bodyView.setText("אפליקציית \"נוסעים לגן\" מבצעת מעקב אחרי נסיעותיכם ברכב. זמן קצר לאחר סיום הנסיעה המערכת תזכיר לכם לוודא שלא שכחתם את ילדכם\n");
-                    continueButton.setText("המשך");
+                    subtitleView.setText(R.string.about_subtitle);
+                    bodyView.setText(R.string.about_text);
+                    continueButton.setText(R.string.about_continue);
                     break;
 
                 case TOS_APPROVED_SHOWING_INTRO:
@@ -97,15 +98,13 @@ public class MainActivity extends Activity {
         });
 
         if (babyRepo.isRideInProgress()) {
-            subtitleView.setText("יצאנו לדרך");
-            bodyView.setText(babyRepo.isBabyInCar() ?
-                new String("עם סיום הנסיעה הנוכחית המערכת תתריע בכדי שתוכלו לוודא כי אף אחת או אחד לא נותרו מאחור :)") :
-                new String("שירות התרעה אינו מופעל עבור נסיעה זו"));
+            subtitleView.setText(R.string.started_title);
+            bodyView.setText(babyRepo.isBabyInCar() ? R.string.started_baby_in_car_text : R.string.started_baby_not_in_car_text);
         }
 
         if (false) {                 // TODO Handle case where GPS & BT are unavailable.
-            subtitleView.setText("אופס!");
-            bodyView.setText("המערכת אינה פעילה! אנא וודאו כי שירות ה-GPS וכן שירות ה-Bluetooth הינם במצב פעיל");
+            subtitleView.setText(R.string.error_title);
+            bodyView.setText(R.string.error_text);
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
     }
