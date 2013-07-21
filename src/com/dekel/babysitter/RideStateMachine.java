@@ -14,12 +14,12 @@ import java.util.LinkedList;
  */
 public class RideStateMachine {
     public static final int BOOT_DELAY = 5 * 1000;
-    public static final int SPEED_MEASURES_COUNT = 10;
-    public static final int MOVING_MIN_TIME = 15 * 1000;
-    public static final int STOPPING_MIN_TIME = 5 * 60 * 1000;
+    public static final int SPEED_MEASURES_COUNT = 5;
+    public static final int MOVING_MIN_TIME = 7 * 1000;
+    public static final int STOPPING_MIN_TIME = 7 * 60 * 1000;
     public static final int FALSE_POSITIVE_STOP = 5 * 60 * 1000;
-    public static float SPEED_MOVING_THRESHOLD = 8; // ~25Km/h / 3.6m/s
-    public static float SPEED_STOPPED_THRESHOLD = 3; // ~10Km/h / 3.6m/s
+    public static float SPEED_MOVING_THRESHOLD = 3.5f; // ~25Km/h / 3.6m/s
+    public static float SPEED_STOPPED_THRESHOLD = 1.5f; // ~10Km/h / 3.6m/s
 
     long serviceLoadTime = System.currentTimeMillis();
     BabyRepo babyRepo = null;
