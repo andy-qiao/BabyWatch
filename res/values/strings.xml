@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">נוסעים לגן</string>
     <string name="about_subtitle">על \"נוסעים לגן\"</string>
-    <string name="about_text">אפליקציית \"נוסעים לגן\" תעזור לכם לוודא שילדכם לא נשאר לבדו ברכב זמן ממושך.\nזמן קצר לאחר סיום הנסיעה המשותפת המערכת תציג המערכת תזכורת עבורכם</string>
+    <string name="about_text">אפליקציית \"נוסעים לגן\" תעזור לכם לוודא שילדכם לא נשאר לבדו ברכב זמן ממושך.\nזמן קצר לאחר סיום הנסיעה המשותפת המערכת תציג תזכורת עבורכם</string>
     <string name="about_continue">המשך</string>
     <string name="ride_finished_title">הנסיעה הסתיימה</string>
     <string name="ride_finished_text">האם הגעת ליעדך?</string> <!-- TODO after alert changing, change that!-->
