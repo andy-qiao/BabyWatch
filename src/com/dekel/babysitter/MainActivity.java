@@ -1,13 +1,12 @@
 package com.dekel.babysitter;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -105,8 +104,6 @@ public class MainActivity extends Activity {
             float logicalDensity = metrics.density;
             int px = (int) (220 * logicalDensity + 0.5);
 
-
-
             findViewById(R.id.mainImageLayout).setLayoutParams(
                     new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, px));
         }
@@ -130,11 +127,15 @@ public class MainActivity extends Activity {
             bodyView.setText(babyRepo.isBabyInCar() ? R.string.started_baby_in_car_text : R.string.started_baby_not_in_car_text);
         }
 
-        if (false) {                 // TODO Handle case where GPS & BT are unavailable.
+        if (!isGPSAvailable()) {
             subtitleView.setText(R.string.error_title);
             bodyView.setText(R.string.error_text);
             ((ImageView) findViewById(R.id.mainImageReady)).setImageResource(R.drawable.icon_x);
         }
+    }
+
+    private boolean isGPSAvailable() {
+        return ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     @Override
