@@ -5,10 +5,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -61,6 +64,12 @@ public class MainActivity extends Activity {
         final TextView subtitleView = (TextView) findViewById(R.id.mainSubtitleTextView);
         subtitleView.setTypeface(FontUtils.getTypefaceBold(this));
 
+        if (isSmallScreen()) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(20, 20, 20, 0);
+            bodyView.setLayoutParams(lp);
+        }
+
         final Button continueButton = (Button) findViewById(R.id.button);
         continueButton.setTypeface(FontUtils.getTypeface(this));
         continueButton.setOnClickListener(new View.OnClickListener() {
@@ -83,8 +92,25 @@ public class MainActivity extends Activity {
         });
     }
 
+    private boolean isSmallScreen() {
+        return getWindowManager().getDefaultDisplay().getHeight() <= 800;
+    }
+
     private void showStatefulHome() {
         setContentView(R.layout.main);
+
+        if (isSmallScreen()) {
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            float logicalDensity = metrics.density;
+            int px = (int) (220 * logicalDensity + 0.5);
+
+
+
+            findViewById(R.id.mainImageLayout).setLayoutParams(
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, px));
+        }
+
 
         ((TextView) findViewById(R.id.mainTitleTextView)).setTypeface(FontUtils.getTypeface(this));
 
