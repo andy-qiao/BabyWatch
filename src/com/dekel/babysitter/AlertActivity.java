@@ -33,6 +33,9 @@ public class AlertActivity extends Activity {
         TextView yesView = (TextView) findViewById(R.id.yesView);
         yesView.setTypeface(FontUtils.getTypefaceBold(this));
 
+        TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
+        subtitleView.setTypeface(FontUtils.getTypeface(this));
+
         if (getIntent().getBooleanExtra(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA, false)) {
             noView.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View view) {
@@ -48,7 +51,6 @@ public class AlertActivity extends Activity {
         } else if (getIntent().getBooleanExtra(Config.SHOW_RIDE_FINISHED_ALERT_INTENT_EXTRA, false)) {
             titleView.setText(R.string.ride_finished_title);
             findViewById(R.id.barView3).setVisibility(View.VISIBLE);
-            TextView subtitleView = (TextView) findViewById(R.id.subtitleView);
             subtitleView.setText(R.string.ride_finished_text);
             subtitleView.setVisibility(View.VISIBLE);
 
