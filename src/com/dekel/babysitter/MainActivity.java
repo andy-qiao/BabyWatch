@@ -35,8 +35,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         babyRepo = new BabyRepo(this);
 
-        new RideStateMachine(this).handleRideStarted();
-
         showRelevantHome();
 
         startService(new Intent(this, BabyMonitorService.class));
