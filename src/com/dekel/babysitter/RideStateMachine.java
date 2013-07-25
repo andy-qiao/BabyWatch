@@ -93,7 +93,7 @@ public class RideStateMachine {
         }
     }
 
-    private void handleRideStarted() {
+    public void handleRideStarted() {
         Log.d(Config.MODULE_NAME, "handleRideStarted");
         if (babyRepo.isRideInProgress()) return;
         babyRepo.setRideInProgress(true);
@@ -102,7 +102,7 @@ public class RideStateMachine {
         startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
     }
 
-    private void handleRideStopped() {
+    public void handleRideStopped() {
         Log.d(Config.MODULE_NAME, "handleRideStopped");
         if (!babyRepo.isRideInProgress()) return;
         babyRepo.setRideInProgress(false);
