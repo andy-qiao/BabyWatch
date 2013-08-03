@@ -1,9 +1,12 @@
 package com.dekel.babysitter;
 
 import android.app.IntentService;
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
@@ -73,9 +76,14 @@ public class GPService extends IntentService {
             Log.d(Config.MODULE_NAME, "DetectedActivity=" + activityName + ", confidence=" + confidence);
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.notification_icon)
-                            .setContentTitle("My notification")
-                            .setContentText("Hello World!");
+                            .setSmallIcon(R.drawable.appicon)
+                            .setContentTitle("Activity=" + activityName)
+                            .setContentText("Confidence=" + confidence);
+
+            mBuilder.build();
+            NotificationManager mNotificationManager =
+                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mNotificationManager.notify(1234, mBuilder.build());
         } else {
             /*
              * This implementation ignores intents that don't contain
