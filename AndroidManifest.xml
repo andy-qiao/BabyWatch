@@ -33,10 +33,12 @@
             </intent-filter>
         </receiver>
         <service android:name=".BabyMonitorService"/>
+        <service android:name=".GPService"/>
     </application>
     <uses-permission android:name="android.permission.LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION"/>
 
 </manifest> 

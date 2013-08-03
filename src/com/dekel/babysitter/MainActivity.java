@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.LinkedList;
 
@@ -142,6 +143,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         showRelevantHome();
+        startService(new Intent(this, GPService.class).putExtra("bla","bla"));
+
+        Log.d(Config.MODULE_NAME,
+            "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
     }
 
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
