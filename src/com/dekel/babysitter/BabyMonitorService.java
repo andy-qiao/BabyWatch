@@ -13,7 +13,10 @@ import android.os.IBinder;
 import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.ActivityRecognitionClient;
+
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,66 +26,31 @@ import com.google.android.gms.location.ActivityRecognitionClient;
  */
 public class BabyMonitorService extends Service implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener {
 
-    LocationManager locationManager = null;
     RideStateMachine rsm = null;
+
+    // GPS Based
+    LocationManager locationManager = null;
+
+    // ActivityDetection
+    private ActivityRecognitionClient mActivityRecognitionClient = null;
+    private PendingIntent mActivityRecognitionPendingIntent = null;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        rsm = RideStateMachine.getInstance(this);
+        rsm = RideStateMachine.getInstance(this); // "this" can be used only in onCreate
 
-        // Register location manager.
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.getLastKnownLocation("speed"); // TODO is it necessary?
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        // Register GPS location manager.
+//        InitGPS();
 
-        // initializeAlarmManager(); // TODO for BT
-        registerGooglePlay();
+        // Bluetooth
+//        initBluetoothDetection();
 
+        // ActivityDetection
+        initActivityDetection();
 
         Log.d(Config.MODULE_NAME, "Registered location service!");
 
-    }
-
-    // Constants that define the activity detection interval
-    public static final int MILLISECONDS_PER_SECOND = 1000;
-    public static final int DETECTION_INTERVAL_SECONDS = 20;
-    public static final int DETECTION_INTERVAL_MILLISECONDS =
-            MILLISECONDS_PER_SECOND * DETECTION_INTERVAL_SECONDS;
-    private PendingIntent mActivityRecognitionPendingIntent;
-    // Store the current activity recognition client
-    private ActivityRecognitionClient mActivityRecognitionClient;
-
-    private void registerGooglePlay() {
-        mActivityRecognitionClient =
-                new ActivityRecognitionClient(this, this, this);
-        /*
-         * Create the PendingIntent that Location Services uses
-         * to send activity recognition updates back to this app.
-         */
-        Intent intent = new Intent(
-                this, ActivityDetectionService.class);
-        /*
-         * Return a PendingIntent that starts the IntentService.
-         */
-        mActivityRecognitionPendingIntent =
-                PendingIntent.getService(this, 0, intent,
-                        PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mActivityRecognitionClient.connect();
-    }
-
-    private void initializeAlarmManager() {
-        // TODO should i just be a receiver? without AM?
-        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(this, BabyMonitorReceiver.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
-        am.cancel(pi);
-
-        am.setInexactRepeating(AlarmManager.RTC,
-                System.currentTimeMillis(),
-                500, // AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                pi);
     }
 
     @Override
@@ -122,6 +90,39 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
         return START_STICKY;
     }
 
+    private void InitGPS() {
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.getLastKnownLocation("speed"); // TODO is it necessary?
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+    }
+
+    private void initBluetoothDetection() {
+        // TODO should i just be a receiver? without AM? (ICS ONLY)
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(this, BabyMonitorReceiver.class);
+        PendingIntent pi = PendingIntent.getBroadcast(this, 0, intent, 0);
+        am.cancel(pi);
+
+        am.setInexactRepeating(AlarmManager.RTC,
+                System.currentTimeMillis(),
+                500, // AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                pi);
+    }
+
+    private void initActivityDetection() {
+        if (GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) != ConnectionResult.SUCCESS) {
+            Log.e(Config.MODULE_NAME, "ERROR - GooglePlayServiceUnavailable " +
+                    GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
+            return;
+        }
+
+        mActivityRecognitionClient = new ActivityRecognitionClient(this, this, this);
+        mActivityRecognitionPendingIntent = PendingIntent.getService(
+                this, 0, new Intent(this, ActivityDetectionService.class), PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mActivityRecognitionClient.connect();
+    }
+
     @Override
     public void onLocationChanged(Location location) {
         Log.d(Config.MODULE_NAME, "onLocationChanged called!");
@@ -149,9 +150,6 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
         return null;
     }
 
-
-
-
     @Override
     public void onStatusChanged(String s, int i, Bundle bundle) {
     }
@@ -164,32 +162,26 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
     public void onProviderDisabled(String s) {
     }
 
+    // ActivityDetection.
     @Override
     public void onConnected(Bundle bundle) {
-        Log.i(Config.MODULE_NAME, "onConnected" + bundle);
+        Log.i(Config.MODULE_NAME, "Connected successfully to GooglePlay services");
 
         mActivityRecognitionClient.requestActivityUpdates(
-                30 * 1000,
+                Config.IDLE_DETECTION_INTERVAL_MILLISECONDS,
                 mActivityRecognitionPendingIntent);
-
-        startService(new Intent(this, BabyMonitorService.class).putExtra("bla","bla"));
-        try {
-            mActivityRecognitionPendingIntent.send();
-        } catch (PendingIntent.CanceledException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
 
         mActivityRecognitionClient.disconnect();
     }
 
     @Override
     public void onDisconnected() {
-        Log.i(Config.MODULE_NAME, "onDisconnected");
+        Log.i(Config.MODULE_NAME, "onDisconnected - Everything's cool.");
         mActivityRecognitionClient = null;
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.e(Config.MODULE_NAME, "onConnectionFailed - FAILED." + connectionResult);
+        Log.e(Config.MODULE_NAME, "onConnectionFailed - FAILED: " + connectionResult);
     }
 }

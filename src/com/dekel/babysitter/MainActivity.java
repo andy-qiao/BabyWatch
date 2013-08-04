@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import java.util.LinkedList;
@@ -136,7 +137,8 @@ public class MainActivity extends Activity {
     }
 
     private boolean isGPSAvailable() {
-        return ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER);
+        return ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER) &&
+                GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS;
     }
 
     @Override
@@ -144,8 +146,7 @@ public class MainActivity extends Activity {
         super.onResume();
         showRelevantHome();
 
-        Log.d(Config.MODULE_NAME,
-            "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
+        Log.d(Config.MODULE_NAME, "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
     }
 
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
