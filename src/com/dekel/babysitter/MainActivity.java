@@ -3,6 +3,7 @@ package com.dekel.babysitter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Point;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -66,7 +67,7 @@ public class MainActivity extends Activity {
         subtitleView.setTypeface(FontUtils.getTypefaceBold(this));
 
         if (isSmallScreen()) {
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             lp.setMargins(20, 20, 20, 0);
             bodyView.setLayoutParams(lp);
         }
@@ -94,7 +95,9 @@ public class MainActivity extends Activity {
     }
 
     private boolean isSmallScreen() {
-        return getWindowManager().getDefaultDisplay().getHeight() <= 800;
+        Point p = new Point();
+        getWindowManager().getDefaultDisplay().getSize(p);
+        return p.y <= 800;
     }
 
     private void showStatefulHome() {
@@ -107,7 +110,7 @@ public class MainActivity extends Activity {
             int px = (int) (220 * logicalDensity + 0.5);
 
             findViewById(R.id.mainImageLayout).setLayoutParams(
-                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, px));
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, px));
         }
 
 
