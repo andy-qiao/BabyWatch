@@ -17,7 +17,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 /**
- * Created with IntelliJ IDEA.
  * User: dekelna
  * Date: 8/3/13
  * Time: 3:12 AM
@@ -28,79 +27,30 @@ public class ActivityDetectionService extends IntentService {
         super("BabyGPService");
     }
 
-    private String getNameFromType(int activityType) {
-        switch(activityType) {
-            case DetectedActivity.IN_VEHICLE:
-                return "in_vehicle";
-            case DetectedActivity.ON_BICYCLE:
-                return "on_bicycle";
-            case DetectedActivity.ON_FOOT:
-                return "on_foot";
-            case DetectedActivity.STILL:
-                return "still";
-            case DetectedActivity.UNKNOWN:
-                return "unknown";
-            case DetectedActivity.TILTING:
-                return "tilting";
-        }
-        return "unknown";
-    }
-
     @Override
     protected void onHandleIntent(Intent intent) {
-        Log.d(Config.MODULE_NAME, "onHandleIntent=" + intent);
-
-        // If the incoming intent contains an update
-        if (ActivityRecognitionResult.hasResult(intent)) {
-            Log.d(Config.MODULE_NAME, "Got ActivityRecognitionResult!");
-
-            // Get the update
-            ActivityRecognitionResult result =
-                    ActivityRecognitionResult.extractResult(intent);
-            // Get the most probable activity
-            DetectedActivity mostProbableActivity =
-                    result.getMostProbableActivity();
-            /*
-             * Get the probability that this activity is the
-             * the user's actual activity
-             */
-            int confidence = mostProbableActivity.getConfidence();
-            /*
-             * Get an integer describing the type of activity
-             */
-            int activityType = mostProbableActivity.getType();
-            String activityName = getNameFromType(activityType);
-            /*
-             * At this point, you have retrieved all the information
-             * for the current update. You can display this
-             * information to the user in a notification, or
-             * send it to an Activity or Service in a broadcast
-             * Intent.
-             */
-
-            Log.d(Config.MODULE_NAME, "DetectedActivity=" + activityName + ", confidence=" + confidence);
-//            appendLog(result.toString());
-            NotificationCompat.Builder mBuilder =
-                    new NotificationCompat.Builder(this)
-                            .setSmallIcon(R.drawable.appicon)
-                            .setContentTitle("Activity=" + activityName)
-                            .setContentText("Confidence=" + confidence);
-
-            mBuilder.build();
-            NotificationManager mNotificationManager =
-                    (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mNotificationManager.notify(1234, mBuilder.build());
-        } else {
-            /*
-             * This implementation ignores intents that don't contain
-             * an activity update. If you wish, you can report them as
-             * errors.
-             */
+        if (!ActivityRecognitionResult.hasResult(intent)) {
+            return;
         }
+        DetectedActivity mostProbableActivity = ActivityRecognitionResult.extractResult(intent).getMostProbableActivity();
+        Log.d(Config.MODULE_NAME, "DetectedActivity=" + getNameFromType(mostProbableActivity.getType()) + ", confidence=" + mostProbableActivity.getConfidence());
+        debugPrintResults(null, mostProbableActivity);
 
-
+        // At the moment we're ignoring confidence, and using only the most probable activity.
+        switch (mostProbableActivity.getType()) {
+            case DetectedActivity.IN_VEHICLE:
+                // TODO change frequency
+                break;
+            case DetectedActivity.ON_FOOT:
+                break;
+        }
     }
 
+
+
+    /**
+     * DEBUG
+     */
     public void appendLog(String text)
     {
         File logFile = new File("sdcard/log.file");
@@ -129,6 +79,37 @@ public class ActivityDetectionService extends IntentService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private void debugPrintResults(ActivityRecognitionResult result, DetectedActivity mostProbableActivity) {
+//        appendLog(result.toString());
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.appicon)
+                        .setContentTitle("Activity=" + getNameFromType(mostProbableActivity.getType()))
+                        .setContentText("Confidence=" + mostProbableActivity.getConfidence());
+
+        mBuilder.build();
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(1234, mBuilder.build());
+    }
+
+    private String getNameFromType(int activityType) {
+        switch(activityType) {
+            case DetectedActivity.IN_VEHICLE:
+                return "in_vehicle";
+            case DetectedActivity.ON_BICYCLE:
+                return "on_bicycle";
+            case DetectedActivity.ON_FOOT:
+                return "on_foot";
+            case DetectedActivity.STILL:
+                return "still";
+            case DetectedActivity.UNKNOWN:
+                return "unknown";
+            case DetectedActivity.TILTING:
+                return "tilting";
+        }
+        return "unknown";
     }
 
 }
