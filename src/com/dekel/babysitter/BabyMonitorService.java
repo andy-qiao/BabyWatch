@@ -32,7 +32,7 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
     @Override
     public void onCreate() {
         super.onCreate();
-        rsm = new RideStateMachine(this);
+        rsm = RideStateMachine.getInstance(this);
 
         // Register location manager.
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
