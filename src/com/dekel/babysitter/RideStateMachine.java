@@ -28,6 +28,7 @@ public class RideStateMachine {
     private long movingSince = 0;
     private long user_havent_stopped_override = 0;
 
+    // Singleton.
     static private RideStateMachine instance = null;
     public static synchronized RideStateMachine getInstance(Context context) {
         if (instance == null) {
@@ -35,7 +36,6 @@ public class RideStateMachine {
         }
         return instance;
     }
-
 
     private Context context = null;
     private RideStateMachine(Context context) {
