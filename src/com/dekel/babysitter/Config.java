@@ -27,5 +27,4 @@ public class Config {
 
     public static final int IN_VEHICLE_DETECTION_INTERVAL_MILLISECONDS = 15 * 1000;
     public static final int IDLE_DETECTION_INTERVAL_MILLISECONDS = IN_VEHICLE_DETECTION_INTERVAL_MILLISECONDS; // TODO change to 15 secs.
-
 }

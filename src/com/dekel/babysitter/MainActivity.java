@@ -137,6 +137,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean isGPSAvailable() {
+        Log.d(Config.MODULE_NAME, "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
         return ((LocationManager) getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled(LocationManager.GPS_PROVIDER) &&
                 GooglePlayServicesUtil.isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS;
     }
@@ -145,8 +146,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         showRelevantHome();
-
-        Log.d(Config.MODULE_NAME, "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));
     }
 
     LinkedList<Long> easterEggTimestamps = new LinkedList<Long>();
