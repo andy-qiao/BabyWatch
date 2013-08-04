@@ -79,7 +79,7 @@ public class GPService extends IntentService {
              */
 
             Log.d(Config.MODULE_NAME, "DetectedActivity=" + activityName + ", confidence=" + confidence);
-            appendLog(result.toString());
+//            appendLog(result.toString());
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.appicon)
