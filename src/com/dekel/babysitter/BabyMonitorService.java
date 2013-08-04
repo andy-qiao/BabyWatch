@@ -172,7 +172,7 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
         Log.i(Config.MODULE_NAME, "onConnected" + bundle);
 
         mActivityRecognitionClient.requestActivityUpdates(
-                0,
+                30 * 1000,
                 mActivityRecognitionPendingIntent);
 
         startService(new Intent(this, BabyMonitorService.class).putExtra("bla","bla"));

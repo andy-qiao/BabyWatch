@@ -11,6 +11,11 @@ import android.util.Log;
 import com.google.android.gms.location.ActivityRecognitionResult;
 import com.google.android.gms.location.DetectedActivity;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: dekelna
@@ -74,6 +79,7 @@ public class GPService extends IntentService {
              */
 
             Log.d(Config.MODULE_NAME, "DetectedActivity=" + activityName + ", confidence=" + confidence);
+            appendLog(result.toString());
             NotificationCompat.Builder mBuilder =
                     new NotificationCompat.Builder(this)
                             .setSmallIcon(R.drawable.appicon)
@@ -93,6 +99,36 @@ public class GPService extends IntentService {
         }
 
 
+    }
+
+    public void appendLog(String text)
+    {
+        File logFile = new File("sdcard/log.file");
+        if (!logFile.exists())
+        {
+            try
+            {
+                logFile.createNewFile();
+            }
+            catch (IOException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        try
+        {
+            //BufferedWriter for performance, true to set append to file flag
+            BufferedWriter buf = new BufferedWriter(new FileWriter(logFile, true));
+            buf.append(text);
+            buf.newLine();
+            buf.close();
+        }
+        catch (IOException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
