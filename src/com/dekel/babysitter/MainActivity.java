@@ -95,9 +95,7 @@ public class MainActivity extends Activity {
     }
 
     private boolean isSmallScreen() {
-        Point p = new Point();
-        getWindowManager().getDefaultDisplay().getSize(p);
-        return p.y <= 800;
+        return getWindowManager().getDefaultDisplay().getHeight() <= 800;
     }
 
     private void showStatefulHome() {
