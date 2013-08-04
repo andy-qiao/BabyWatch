@@ -23,8 +23,12 @@ import java.io.IOException;
  */
 public class ActivityDetectionService extends IntentService {
 
+    RideStateMachine rsm = null;
+
     public ActivityDetectionService() {
         super("BabyGPService");
+
+        rsm = RideStateMachine.getInstance(this);
     }
 
     @Override
@@ -32,7 +36,9 @@ public class ActivityDetectionService extends IntentService {
         if (!ActivityRecognitionResult.hasResult(intent)) {
             return;
         }
+
         DetectedActivity mostProbableActivity = ActivityRecognitionResult.extractResult(intent).getMostProbableActivity();
+
         Log.d(Config.MODULE_NAME, "DetectedActivity=" + getNameFromType(mostProbableActivity.getType()) + ", confidence=" + mostProbableActivity.getConfidence());
         debugPrintResults(null, mostProbableActivity);
 
@@ -40,8 +46,10 @@ public class ActivityDetectionService extends IntentService {
         switch (mostProbableActivity.getType()) {
             case DetectedActivity.IN_VEHICLE:
                 // TODO change frequency
+                rsm.handleRideStarted();
                 break;
             case DetectedActivity.ON_FOOT:
+                rsm.handleRideStopped();
                 break;
         }
     }
