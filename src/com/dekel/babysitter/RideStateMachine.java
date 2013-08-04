@@ -28,8 +28,17 @@ public class RideStateMachine {
     private long movingSince = 0;
     private long user_havent_stopped_override = 0;
 
+    // Singleton.
+    static private RideStateMachine instance = null;
+    public static synchronized RideStateMachine getInstance(Context context) {
+        if (instance == null) {
+            instance = new RideStateMachine(context);
+        }
+        return instance;
+    }
+
     private Context context = null;
-    public RideStateMachine(Context context) {
+    private RideStateMachine(Context context) {
         this.context = context;
         babyRepo = new BabyRepo(context);
     }
