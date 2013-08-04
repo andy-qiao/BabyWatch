@@ -33,7 +33,7 @@
             </intent-filter>
         </receiver>
         <service android:name=".BabyMonitorService"/>
-        <service android:name=".GPService"/>
+        <service android:name=".ActivityDetectionService"/>
     </application>
     <uses-permission android:name="android.permission.LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

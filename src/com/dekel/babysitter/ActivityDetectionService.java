@@ -22,9 +22,9 @@ import java.io.IOException;
  * Date: 8/3/13
  * Time: 3:12 AM
  */
-public class GPService extends IntentService {
+public class ActivityDetectionService extends IntentService {
 
-    public GPService() {
+    public ActivityDetectionService() {
         super("BabyGPService");
     }
 

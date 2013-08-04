@@ -143,7 +143,6 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         showRelevantHome();
-        startService(new Intent(this, GPService.class).putExtra("bla","bla"));
 
         Log.d(Config.MODULE_NAME,
             "GooglePlay: " + GooglePlayServicesUtil.getErrorString(GooglePlayServicesUtil.isGooglePlayServicesAvailable(this)));

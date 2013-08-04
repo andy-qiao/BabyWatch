@@ -1,7 +1,6 @@
 package com.dekel.babysitter;
 
 import android.app.AlarmManager;
-import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -15,8 +14,6 @@ import android.util.Log;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.location.ActivityRecognitionClient;
-import com.google.android.gms.location.ActivityRecognitionResult;
-import com.google.android.gms.location.DetectedActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -64,7 +61,7 @@ public class BabyMonitorService extends Service implements LocationListener, Goo
          * to send activity recognition updates back to this app.
          */
         Intent intent = new Intent(
-                this, GPService.class);
+                this, ActivityDetectionService.class);
         /*
          * Return a PendingIntent that starts the IntentService.
          */
