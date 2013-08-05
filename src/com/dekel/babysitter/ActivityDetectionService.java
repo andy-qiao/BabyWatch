@@ -26,7 +26,11 @@ public class ActivityDetectionService extends IntentService {
 
     public ActivityDetectionService() {
         super("BabyGPService");
+    }
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
         rsm = RideStateMachine.getInstance(this);
     }
 
