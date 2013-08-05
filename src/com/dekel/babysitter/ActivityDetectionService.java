@@ -2,10 +2,8 @@ package com.dekel.babysitter;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.google.android.gms.location.ActivityRecognitionResult;
@@ -37,12 +35,18 @@ public class ActivityDetectionService extends IntentService {
             return;
         }
 
-        DetectedActivity mostProbableActivity = ActivityRecognitionResult.extractResult(intent).getMostProbableActivity();
+        final ActivityRecognitionResult result = ActivityRecognitionResult.extractResult(intent);
+        appendLog(result.toString());
 
+        DetectedActivity mostProbableActivity = result.getMostProbableActivity();
         Log.d(Config.MODULE_NAME, "DetectedActivity=" + getNameFromType(mostProbableActivity.getType()) + ", confidence=" + mostProbableActivity.getConfidence());
-        debugPrintResults(null, mostProbableActivity);
+//        debugNotification(null, mostProbableActivity);
 
-        // At the moment we're ignoring confidence, and using only the most probable activity.
+        if (mostProbableActivity.getConfidence() < 40) {
+            Log.d(Config.MODULE_NAME, "Ignoring weak detection.");
+            return;
+        }
+
         switch (mostProbableActivity.getType()) {
             case DetectedActivity.IN_VEHICLE:
                 // TODO change frequency
@@ -53,8 +57,6 @@ public class ActivityDetectionService extends IntentService {
                 break;
         }
     }
-
-
 
     /**
      * DEBUG
@@ -89,7 +91,7 @@ public class ActivityDetectionService extends IntentService {
         }
     }
 
-    private void debugPrintResults(ActivityRecognitionResult result, DetectedActivity mostProbableActivity) {
+    private void debugNotification(ActivityRecognitionResult result, DetectedActivity mostProbableActivity) {
 //        appendLog(result.toString());
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
