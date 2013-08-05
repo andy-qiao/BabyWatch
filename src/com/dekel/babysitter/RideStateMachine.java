@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.LinkedList;
 
 /**
@@ -102,10 +103,21 @@ public class RideStateMachine {
         }
     }
 
+    private final long MAX_RIDE_TIME =  2 * 60 * 60 * 1000; // 2 hours
+    private final long MIN_RIDE_TIME =  2 * 60 * 1000; // 2 mins
+    private long rideStartedAt = 0;
     public void handleRideStarted() {
         Log.d(Config.MODULE_NAME, "handleRideStarted");
-        if (babyRepo.isRideInProgress()) return;
+        if (babyRepo.isRideInProgress()) {
+            if (System.currentTimeMillis() - rideStartedAt > MAX_RIDE_TIME) {
+                Log.d(Config.MODULE_NAME, "Ride too long, restarting, " + (System.currentTimeMillis() - rideStartedAt));
+            } else {
+                return;
+            }
+
+        }
         babyRepo.setRideInProgress(true);
+        rideStartedAt = System.currentTimeMillis();
 
         Log.d(Config.MODULE_NAME, Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
         startAlertActivityWithIntent(Config.SHOW_RIDE_STARTED_ALERT_INTENT_EXTRA);
@@ -115,6 +127,14 @@ public class RideStateMachine {
         Log.d(Config.MODULE_NAME, "handleRideStopped");
         if (!babyRepo.isRideInProgress()) return;
         babyRepo.setRideInProgress(false);
+
+        if (System.currentTimeMillis() - rideStartedAt > MAX_RIDE_TIME) {
+            Log.d(Config.MODULE_NAME, "Ride too long, ignoring, " + (System.currentTimeMillis() - rideStartedAt));
+            return;
+        } else if (System.currentTimeMillis() - rideStartedAt < MIN_RIDE_TIME) {
+            Log.d(Config.MODULE_NAME, "Ride too short, ignoring, " + (System.currentTimeMillis() - rideStartedAt));
+            return;
+        }
 
         if (babyRepo.isBabyInCar()) {
             babyRepo.setBabyInCar(false);
