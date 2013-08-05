@@ -21,6 +21,7 @@ import java.io.IOException;
  */
 public class ActivityDetectionService extends IntentService {
 
+    public static final int MIN_CONFIDENCE = 40;
     RideStateMachine rsm = null;
 
     public ActivityDetectionService() {
@@ -42,7 +43,7 @@ public class ActivityDetectionService extends IntentService {
         Log.d(Config.MODULE_NAME, "DetectedActivity=" + getNameFromType(mostProbableActivity.getType()) + ", confidence=" + mostProbableActivity.getConfidence());
 //        debugNotification(null, mostProbableActivity);
 
-        if (mostProbableActivity.getConfidence() < 40) {
+        if (mostProbableActivity.getConfidence() < MIN_CONFIDENCE) {
             Log.d(Config.MODULE_NAME, "Ignoring weak detection.");
             return;
         }
