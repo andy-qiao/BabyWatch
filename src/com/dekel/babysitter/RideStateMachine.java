@@ -126,7 +126,6 @@ public class RideStateMachine {
     public void handleRideStopped() {
         Log.d(Config.MODULE_NAME, "handleRideStopped");
         if (!babyRepo.isRideInProgress()) return;
-        babyRepo.setRideInProgress(false);
 
         if (System.currentTimeMillis() - rideStartedAt > MAX_RIDE_TIME) {
             Log.d(Config.MODULE_NAME, "Ride too long, ignoring, " + (System.currentTimeMillis() - rideStartedAt));
@@ -135,6 +134,8 @@ public class RideStateMachine {
             Log.d(Config.MODULE_NAME, "Ride too short, ignoring, " + (System.currentTimeMillis() - rideStartedAt));
             return;
         }
+
+        babyRepo.setRideInProgress(false);
 
         if (babyRepo.isBabyInCar()) {
             babyRepo.setBabyInCar(false);
